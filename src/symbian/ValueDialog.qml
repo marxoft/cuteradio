@@ -38,7 +38,7 @@ SelectionDialog {
         }
     }
     onStatusChanged:  {
-        if (status === DialogStatus.Opening) {
+        if (status === DialogStatus.Open) {
             for (var i = 0; i < model.count; i++) {
                 if (model.value(i) === value) {
                     name = model.name(i);

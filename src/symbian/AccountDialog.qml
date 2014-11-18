@@ -141,7 +141,7 @@ MySheet {
     onDone: request.post()
     onRejected: request.cancel()
     onStatusChanged: {
-        if (status === DialogStatus.Opening) {
+        if (status === DialogStatus.Open) {
             usernameField.text = "";
             passwordField.text = "";
             usernameField.focus = true;

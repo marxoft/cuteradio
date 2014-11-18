@@ -88,7 +88,7 @@ MySheet {
     }
 
     onStatusChanged: {
-        if (status === DialogStatus.Opening) {
+        if (status === DialogStatus.Open) {
             sourceField.text = "";
             sourceField.focus = true;
         }

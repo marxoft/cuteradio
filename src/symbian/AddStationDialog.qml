@@ -237,7 +237,7 @@ MySheet {
     }
     onRejected: request.cancel()
     onStatusChanged: {
-        if (status === DialogStatus.Opening) {
+        if (status === DialogStatus.Open) {
             titleField.text = "";
             descriptionField.text = "";
             genreField.text = "";
