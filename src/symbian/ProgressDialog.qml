@@ -28,7 +28,7 @@ QueryDialog {
         root.open();
     }
 
-    height: contentItem.height
+    height: contentItem.height + 140
     platformInverted: false
     rejectButtonText: qsTr("Cancel")
     titleText: qsTr("Please wait")
@@ -36,7 +36,7 @@ QueryDialog {
     content: Item {
         id: contentItem
 
-        height: column.height
+        height: infoLabel.height
         anchors {
             top: parent.top
             left: parent.left
@@ -44,22 +44,15 @@ QueryDialog {
             margins: platformStyle.paddingLarge
         }
 
-        Column {
-            id: column
+        Label {
+            id: infoLabel
 
             anchors {
+                top: parent.top
                 left: parent.left
                 right: parent.right
-                top: parent.top
             }
-            spacing: platformStyle.paddingLarge
-
-            Label {
-                id: infoLabel
-
-                width: parent.width
-                wrapMode: Text.Wrap
-            }
+            wrapMode: Text.Wrap
         }
     }
 }
