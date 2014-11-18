@@ -97,14 +97,6 @@ MyPage {
                 font.pixelSize: platformStyle.fontSizeSmall
                 text: qsTr("Genre") + ": " + (player.metaData.genre ? player.metaData.genre : player.currentStation.genre)
             }
-
-            Label {
-                width: parent.width
-                wrapMode: Text.WordWrap
-                font.pixelSize: platformStyle.fontSizeSmall
-                text: qsTr("Bitrate") + ": " + (player.metaData.audioBitRate ? Utils.fileSizeFromBytes(player.metaData.audioBitRate) + "/s"
-                                                                             : qsTr("Unknown"))
-            }
         }
     }
 
@@ -221,11 +213,11 @@ MyPage {
             verticalAlignment: Text.AlignVCenter
             font.pixelSize: platformStyle.fontSizeSmall
             text: qsTr("Status") + ": " + (extractor.status == StreamExtractor.Loading ? qsTr("Loading")
+                                                                                       : !player.playing
+                                                                                       ? qsTr("Stopped")
                                                                                        : player.bufferProgress < 1
                                                                                        ? qsTr("Buffering")
-                                                                                       : player.playing
-                                                                                       ? qsTr("Playing")
-                                                                                       : qsTr("Stopped"))
+                                                                                       : qsTr("Playing"))
         }
     }
 
