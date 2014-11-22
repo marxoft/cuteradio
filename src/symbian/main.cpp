@@ -32,6 +32,8 @@
 #include <QDeclarativeEngine>
 #include <QDeclarativeContext>
 #include <qdeclarative.h>
+#include <QSsl>
+#include <QSslConfiguration>
 //#include <QTranslator>
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
@@ -51,6 +53,10 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     qmlRegisterType<StreamExtractor>("org.marxoft.cuteradio", 1, 0, "StreamExtractor");
     qmlRegisterType<MediakeyCaptureItem>("org.marxoft.cuteradio", 1, 0, "VolumeKeys");
     qmlRegisterType<UpdateManager>("org.marxoft.updates", 1, 0, "UpdateManager");
+    
+    QSslConfiguration config = QSslConfiguration::defaultConfiguration();
+    config.setProtocol(QSsl::TlsV1);
+    QSslConfiguration::setDefaultConfiguration(config);
     
     Settings settings;
     Utils utils;
