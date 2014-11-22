@@ -45,6 +45,28 @@ MyPage {
                 margins: platformStyle.paddingLarge
             }
             spacing: platformStyle.paddingLarge * 2
+            
+            Label {
+                width: parent.width
+                wrapMode: Text.WordWrap
+                textFormat: Text.RichText
+                text: "<html>
+<b>0.3.1</b>
+
+<ul>
+
+<li>
+Fix SSL handshake errors on some devices.
+</li>
+
+<li>
+Re-fetch the stream URL from playlists when resuming playback to avoid errors due to URL changes.
+</li>
+
+</ul>
+
+</html>"
+            }
 
             Label {
                 width: parent.width

@@ -57,6 +57,24 @@ MyPage {
                 wrapMode: Text.WordWrap
                 textFormat: Text.RichText
                 text: "<html>
+<b>0.3.1</b>
+
+<ul>
+
+<li>
+Re-fetch the stream URL from playlists when resuming playback to avoid errors due to URL changes.
+</li>
+
+</ul>
+
+</html>"
+            }
+            
+            Label {
+                width: parent.width
+                wrapMode: Text.WordWrap
+                textFormat: Text.RichText
+                text: "<html>
 <b>0.3.0</b>
 
 <ul>
