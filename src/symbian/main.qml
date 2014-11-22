@@ -79,10 +79,13 @@ AppWindow {
         }
         
         function restart() {
-            var s = source;
-            source = "";
-            source = s;
-            play();
+            if (Utils.urlIsPlaylist(currentStation.source)) {
+                extractor.getStreamUrl(currentStation.source);
+            }
+            else {
+                source = currentStation.source;
+                play();
+            }
         }
 
         volume: volumeKeys.volume

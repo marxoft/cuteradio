@@ -74,6 +74,15 @@ PageStackWindow {
             }
         }
         
+        function restart() {
+            if (Utils.urlIsPlaylist(currentStation.source)) {
+                extractor.getStreamUrl(currentStation.source);
+            }
+            else {
+                play();
+            }
+        }
+        
         onError: infoBanner.showMessage(errorString)
         onStarted: if ((Settings.sendPlayedStationsData)
                        && (Settings.token)

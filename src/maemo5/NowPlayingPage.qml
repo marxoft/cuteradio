@@ -162,7 +162,7 @@ Page {
                 iconSize: "64x64"
                 icon: "/etc/hildon/theme/mediaplayer/" + (player.playing ? "Stop" : "Play") + ".png"
                 shortcut: "Space"
-                onClicked: player.playing ? player.stop() : player.play()
+                onClicked: player.playing ? player.stop() : player.restart()
             }
             
             ToolButton {

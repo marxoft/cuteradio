@@ -138,7 +138,7 @@ MyPage {
             MyButton {
                 height: 100
                 iconSource: "image://theme/icon-m-toolbar-mediacontrol-" + (player.playing ? "stop" : "play") + "-white"
-                onClicked: player.playing ? player.stop() : player.play()
+                onClicked: player.playing ? player.stop() : player.restart()
             }
 
             MyButton {

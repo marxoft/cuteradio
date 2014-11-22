@@ -230,6 +230,15 @@ Window {
             }
         }
         
+        function restart() {
+            if (Utils.urlIsPlaylist(currentStation.source)) {
+                extractor.getStreamUrl(currentStation.source);
+            }
+            else {
+                play();
+            }
+        }
+        
         tickInterval: 0
         onError: infobox.showError(errorString)
         onStarted: if ((Settings.sendPlayedStationsData)
