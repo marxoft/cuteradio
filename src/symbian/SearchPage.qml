@@ -222,8 +222,10 @@ MyPage {
         }
     }
 
-    Component.onCompleted: {
-        stationModel.source = "search$" + root.query;
-        stationModel.searchStations(root.query);
+    onQueryChanged: {
+        if (query) {
+            stationModel.source = "search$" + root.query;
+            stationModel.searchStations(root.query);
+        }
     }
 }

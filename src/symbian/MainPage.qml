@@ -101,7 +101,8 @@ MyPage {
             if (searchText) {
                 var query = searchText;
                 searchText = "";
-                appWindow.pageStack.push(Qt.resolvedUrl("SearchPage.qml"), { query: query });
+                appWindow.pageStack.push(Qt.resolvedUrl("SearchPage.qml"));
+                appWindow.pageStack.currentPage.query = query;
             }
         }
     }

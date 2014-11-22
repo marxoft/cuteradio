@@ -205,7 +205,8 @@ Dialog {
     onClickedOutside: reject()
     onAccepted: {
         var query = searchModel.data(selectedIndex, "name");
-        appWindow.pageStack.push(Qt.resolvedUrl("SearchPage.qml"), { query: query });
+        appWindow.pageStack.push(Qt.resolvedUrl("SearchPage.qml"));
+        appWindow.pageStack.currentPage.query = query;
     }
 
     onStatusChanged: {
