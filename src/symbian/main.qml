@@ -73,6 +73,7 @@ AppWindow {
                 extractor.getStreamUrl(station.source);
             }
             else {
+                source = "";
                 source = station.source;
                 play();
             }
@@ -83,6 +84,7 @@ AppWindow {
                 extractor.getStreamUrl(currentStation.source);
             }
             else {
+                source = "";
                 source = currentStation.source;
                 play();
             }
@@ -123,6 +125,7 @@ AppWindow {
                 infoBanner.showMessage(qsTr("Retrieving the stream URL from the playlist"));
                 break;
             case StreamExtractor.Ready: {
+                source = "";
                 player.source = result;
                 player.play();
                 break;
