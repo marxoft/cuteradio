@@ -51,7 +51,7 @@ MyPage {
                 wrapMode: Text.WordWrap
                 textFormat: Text.RichText
                 text: "<html>
-<b>0.3.1</b>
+<b>0.3.2</b>
 
 <ul>
 

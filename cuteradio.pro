@@ -14,6 +14,7 @@ INSTALLS += target
 maemo5 {
     system(lupdate src/base/*.* src/maemo5/*.* -ts translations/maemo5/base.ts)
     system(cp translations/maemo5/base.ts translations/maemo5/en.ts)
+    system(cp translations/maemo5/base.ts translations/maemo5.ts)
     system(lrelease translations/maemo5/en.ts)
 
     SOURCES += src/maemo5/main.cpp
@@ -38,6 +39,7 @@ maemo5 {
 symbian {
     system(lupdate src/base/*.* src/symbian/*.* -ts translations/symbian/base.ts)
     system(cp translations/symbian/base.ts translations/symbian/en.ts)
+    system(cp translations/symbian/base.ts translations/symbian.ts)
     system(lrelease translations/symbian/en.ts)
 
     DEFINES += SYMBIAN_OS IN_APP_UPDATES
@@ -59,7 +61,7 @@ symbian {
     OTHER_FILES += $$files(src/symbian/*.qml)
 
     DEPLOYMENT.display_name = cuteRadio
-    VERSION = 0.3.0
+    VERSION = 0.3.2
     ICON = desktop/symbian/cuteradio.svg
 
     vendorinfo += "%{\"Stuart Howarth\"}" ":\"Stuart Howarth\""
@@ -85,6 +87,7 @@ simulator {
 contains(MEEGO_EDITION,harmattan) {
     system(lupdate src/base/*.* src/harmattan/*.* -ts translations/harmattan/base.ts)
     system(cp translations/harmattan/base.ts translations/harmattan/en.ts)
+    system(cp translations/harmattan/base.ts translations/harmattan.ts)
     system(lrelease translations/harmattan/en.ts)
 
     QT += opengl
