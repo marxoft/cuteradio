@@ -98,11 +98,11 @@ QString Utils::httpErrorString(int errorCode) {
 }
 
 bool Utils::urlIsPlaylist(const QUrl &url) {
-    QString urlString = url.toString().toLower();
+    QString path = url.path().toLower();
 
-    return ((urlString.endsWith(".pls")) || (urlString.endsWith(".asx")) 
-            || (urlString.endsWith(".m3u")) || (urlString.endsWith(".smil"))
-            || (urlString.endsWith(".ram")));
+    return ((path.endsWith(".pls")) || (path.endsWith(".asx")) 
+            || (path.endsWith(".m3u")) || (path.endsWith(".smil"))
+            || (path.endsWith(".ram")));
 }
 
 QString Utils::capitalise(const QString &string) {

@@ -42,12 +42,20 @@ StreamExtractor::~StreamExtractor() {
     }
 }
 
+static QString getUrlFromUnknownFile(const QString &response) {
+    QRegExp re("(http(s|)|mms)://[^\\s\"'<>]+", Qt::CaseInsensitive);
+
+    return re.indexIn(response) >= 0 ? re.cap() : QString();
+}
+
 static QString getUrlFromASXFile(const QString &response) {
     QDomDocument doc;
     doc.setContent(response.toLower());
     QDomNode node = doc.documentElement().namedItem("entry");
+    QDomElement href = node.isNull() ? doc.documentElement().namedItem("entryref").toElement()
+                                     : node.firstChildElement("ref");
 
-    return node.firstChildElement("ref").attribute("href");
+    return href.isNull() ? getUrlFromUnknownFile(response) : href.attribute("href");
 }
 
 static QString getUrlFromPLSFile(const QString &response) {
@@ -55,9 +63,9 @@ static QString getUrlFromPLSFile(const QString &response) {
 }
 
 static QString getUrlFromM3UFile(const QString &response) {
-    QRegExp re("http(s|)://\\S+", Qt::CaseInsensitive);
+    QRegExp re("(http(s|)|mms)://\\S+", Qt::CaseInsensitive);
 
-    return re.indexIn(response) >= 0 ? re.cap() : QString();
+    return re.indexIn(response) >= 0 ? re.cap() : getUrlFromUnknownFile(response);
 }
 
 static QString getUrlFromSMILFile(const QString &response) {
@@ -65,19 +73,14 @@ static QString getUrlFromSMILFile(const QString &response) {
     doc.setContent(response.toLower());
     QDomNode node = doc.documentElement().namedItem("body");
 
-    return node.firstChildElement("audio").attribute("src");
+    return node.isNull() ? getUrlFromUnknownFile(response)
+                         : node.firstChildElement("audio").attribute("src");
 }
 
 static QString getUrlFromRAMFile(const QString &response) {
-    QRegExp re("http(s|)://\\S+", Qt::CaseInsensitive);
+    QRegExp re("(http(s|)|mms)://\\S+", Qt::CaseInsensitive);
 
-    return re.indexIn(response) >= 0 ? re.cap() : QString();
-}
-
-static QString getUrlFromUnknownFile(const QString &response) {
-    QRegExp re("http(s|)://[^\\s\"'<>]+", Qt::CaseInsensitive);
-
-    return re.indexIn(response) >= 0 ? re.cap() : QString();
+    return re.indexIn(response) >= 0 ? re.cap() : getUrlFromUnknownFile(response);
 }
 
 static QString getUrlFromPlaylistFile(const QString &response, const QString &format) {
