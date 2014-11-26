@@ -57,9 +57,13 @@ MyPage {
                 wrapMode: Text.WordWrap
                 textFormat: Text.RichText
                 text: "<html>
-<b>0.3.2</b>
+<b>0.3.3</b>
 
 <ul>
+
+<li>
+Improve retrieval of stream URLs from playlists.
+</li>
 
 <li>
 Re-fetch the stream URL from playlists when resuming playback to avoid errors due to URL changes.

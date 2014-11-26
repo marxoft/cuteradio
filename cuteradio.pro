@@ -8,8 +8,8 @@ INCLUDEPATH += src/base
 
 INSTALLS += target
 
-#DEFINES += CUTERADIO_TEST
-#DEFINES += CUTERADIO_DEBUG
+DEFINES += CUTERADIO_TEST
+DEFINES += CUTERADIO_DEBUG
 
 maemo5 {
     system(lupdate src/base/*.* src/maemo5/*.* -ts translations/maemo5/base.ts)
@@ -61,7 +61,7 @@ symbian {
     OTHER_FILES += $$files(src/symbian/*.qml)
 
     DEPLOYMENT.display_name = cuteRadio
-    VERSION = 0.3.2
+    VERSION = 0.3.3
     ICON = desktop/symbian/cuteradio.svg
 
     vendorinfo += "%{\"Stuart Howarth\"}" ":\"Stuart Howarth\""

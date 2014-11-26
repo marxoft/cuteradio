@@ -51,6 +51,24 @@ MyPage {
                 wrapMode: Text.WordWrap
                 textFormat: Text.RichText
                 text: "<html>
+<b>0.3.3</b>
+
+<ul>
+
+<li>
+Improve retrieval of stream URLs from playlists.
+</li>
+
+</ul>
+
+</html>"
+            }
+            
+            Label {
+                width: parent.width
+                wrapMode: Text.WordWrap
+                textFormat: Text.RichText
+                text: "<html>
 <b>0.3.2</b>
 
 <ul>

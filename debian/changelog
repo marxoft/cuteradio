@@ -1,7 +1,8 @@
-cuteradio (0.3.1) unstable; urgency=low
+cuteradio (0.3.3) unstable; urgency=low
+  * Improve retrieval of stream URLs from playlists.
   * Re-fetch the stream URL from playlists when resuming playback to avoid errors due to URL changes.
 
- -- Stuart Howarth <showarth@marxoft.co.uk>  Fri, 21 Nov 2014 23:10:26 +0100
+ -- Stuart Howarth <showarth@marxoft.co.uk>  Wed, 26 Nov 2014 12:58:26 +0100
 
 cuteradio (0.3.0) unstable; urgency=low
   * Replace TuneIn with cuteRadio REST API.
