@@ -1,15 +1,14 @@
 TEMPLATE = app
 TARGET = cuteradio
-QT += network xml declarative
+QT += network xml
 
 HEADERS += $$files(src/base/*.h)
 SOURCES += $$files(src/base/*.cpp)
 INCLUDEPATH += src/base
 
-INSTALLS += target
-
-DEFINES += CUTERADIO_TEST
-DEFINES += CUTERADIO_DEBUG
+#DEFINES += CUTERADIO_TEST
+#DEFINES += CUTERADIO_DEBUG
+#DEFINES += UBUNTU-TOUCH
 
 maemo5 {
     system(lupdate src/base/*.* src/maemo5/*.* -ts translations/maemo5/base.ts)
@@ -17,6 +16,7 @@ maemo5 {
     system(cp translations/maemo5/base.ts translations/maemo5.ts)
     system(lrelease translations/maemo5/en.ts)
 
+    QT += declarative
     SOURCES += src/maemo5/main.cpp
 
     target.path = /opt/cuteradio/bin
@@ -43,6 +43,7 @@ symbian {
     system(lrelease translations/symbian/en.ts)
 
     DEFINES += SYMBIAN_OS IN_APP_UPDATES
+    QT += declarative
     TARGET = cuteradio_0xe71cbb8d
     CONFIG += qtcomponents
     MMP_RULES += "DEBUGGABLE_UDEBONLY"
@@ -78,6 +79,7 @@ symbian {
 
 simulator {
     DEFINES += SYMBIAN_OS IN_APP_UPDATES
+    QT += declarative
     CONFIG += qtcomponents
     SOURCES += src/symbian/main.cpp
     RESOURCES += src/symbian/resources.qrc
@@ -90,7 +92,7 @@ contains(MEEGO_EDITION,harmattan) {
     system(cp translations/harmattan/base.ts translations/harmattan.ts)
     system(lrelease translations/harmattan/en.ts)
 
-    QT += opengl
+    QT += opengl declarative
     CONFIG += qdeclarative-boostable
     SOURCES += src/harmattan/main.cpp
     RESOURCES += src/harmattan/resources.qrc
@@ -113,6 +115,28 @@ contains(MEEGO_EDITION,harmattan) {
     INSTALLS += desktop icon splash translations
 }
 
+contains(DEFINES,UBUNTU-TOUCH) {
+    load(ubuntu-click)
+
+    QT += qml quick
+    SOURCES += src/ubuntu/main.cpp
+    RESOURCES += src/ubuntu/resources.qrc
+    OTHER_FILES += $$files(src/ubuntu/*.qml)
+
+    UBUNTU_MANIFEST_FILE=desktop/ubuntu/manifest.json.in
+    UBUNTU_TRANSLATION_DOMAIN="cuteradio.marxoft"
+    UBUNTU_TRANSLATION_SOURCES+= \
+        $$files(src/base/*.*, true) \
+        $$files(src/ubuntu/*.qml,true)
+    UBUNTU_PO_FILES += $$files(po/*.po)
+    
+    desktop.path = /cuteradio
+    desktop.files += $$files(desktop/ubuntu/*)
+    target.path = $${UBUNTU_CLICK_BINARY_PATH}
+
+    #INSTALLS += desktop
+}
+
 contains(DEFINES,IN_APP_UPDATES) {
     INCLUDEPATH += src/updatemanager
     HEADERS += src/updatemanager/updatemanager.h
@@ -129,3 +153,5 @@ contains(DEFINES,CUTERADIO_TEST) {
     
     INSTALLS += qml
 }
+
+INSTALLS += target

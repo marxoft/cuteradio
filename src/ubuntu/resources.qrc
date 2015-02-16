@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>AboutAction.qml</file>
+        <file>AboutDialog.qml</file>
+		<file>AccountPage.qml</file>
+        <file>AddStationPage.qml</file>
+		<file>CountriesPage.qml</file>
+		<file>FavouritesPage.qml</file>
+		<file>GenresPage.qml</file>
+		<file>HomescreenDelegate.qml</file>
+		<file>InfoBanner.qml</file>
+		<file>LanguagesPage.qml</file>
+        <file>Logo.qml</file>
+		<file>MainPage.qml</file>
+		<file>MyStationsPage.qml</file>
+		<file>NameCountDelegate.qml</file>
+        <file>NowPlayingAction.qml</file>
+		<file>NowPlayingPage.qml</file>
+        <file>PlayUrlAction.qml</file>
+        <file>PlayUrlDialog.qml</file>
+		<file>ProgressDialog.qml</file>
+		<file>RecentlyPlayedPage.qml</file>
+		<file>SearchHistoryDialog.qml</file>
+		<file>SearchPage.qml</file>
+		<file>SectionDelegate.qml</file>
+        <file>SeparatorLabel.qml</file>
+        <file>SettingsAction.qml</file>
+		<file>SettingsPage.qml</file>
+		<file>StationDelegate.qml</file>
+		<file>StationDetailsPage.qml</file>
+		<file>StationsPage.qml</file>
+        <file>images/cuteradio.png</file>
+    </qresource>
+</RCC>
+
