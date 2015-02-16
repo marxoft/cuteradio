@@ -42,6 +42,7 @@ Dialog {
     
     onAccepted: {
         var station = {
+            "id": "url",
             "title": qsTr("(unknown station)"),
             "description": "",
             "genre": qsTr("(unknown genre)"),
