@@ -74,6 +74,7 @@ MySheet {
 
     onAccepted: {
         var station = {
+	    "id": "url",
             "title": qsTr("Unknown"),
             "description": "",
             "genre": qsTr("Unknown"),

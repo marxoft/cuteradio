@@ -33,7 +33,7 @@ MyPage {
         ToolIcon {
             anchors.right: parent.right
             platformIconId: "toolbar-refresh"
-            onClicked: countryModel.getGenres()
+            onClicked: genreModel.getGenres()
         }
     }
 

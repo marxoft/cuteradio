@@ -125,7 +125,7 @@ AppWindow {
                 infoBanner.showMessage(qsTr("Retrieving the stream URL from the playlist"));
                 break;
             case StreamExtractor.Ready: {
-                source = "";
+                player.source = "";
                 player.source = result;
                 player.play();
                 break;
