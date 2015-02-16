@@ -19,7 +19,8 @@
 #include <QFileInfo>
 #include <QFile>
 #include <QStringList>
-
+#include <QDateTime>
+#include <QUrl>
 
 Utils::Utils(QObject *parent) :
     QObject(parent)
@@ -29,17 +30,12 @@ Utils::Utils(QObject *parent) :
 Utils::~Utils() {}
 
 QString Utils::durationFromSecs(int secs) {
-    QTime time;
-    QString format = secs >= 3600 ? "hh:mm:ss" : "mm:ss";
-
-    return time.addSecs(secs).toString(format);
+    return secs > 0 ? QString("%1:%2").arg(secs / 60, 2, 10, QChar('0')).arg(secs % 60, 2, 10, QChar('0'))
+                    : "00:00";
 }
 
 QString Utils::durationFromMSecs(int msecs) {
-    QTime time;
-    QString format = msecs >= 3600000 ? "hh:mm:ss" : "mm:ss";
-
-    return time.addMSecs(msecs).toString(format);
+    return msecs > 0 ? durationFromSecs(msecs / 1000) : "00:00";
 }
 
 QString Utils::fileSizeFromPath(const QString &filePath) {

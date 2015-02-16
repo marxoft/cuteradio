@@ -19,9 +19,10 @@
 #define UTILS_H
 
 #include <QObject>
-#include <QString>
-#include <QDateTime>
-#include <QUrl>
+
+class QString;
+class QUrl;
+class QStringList;
 
 class Utils : public QObject
 {

@@ -29,14 +29,14 @@
 using namespace QtJson;
 
 static QNetworkRequest buildRequest(QString url, bool auth = true) {
-    
     QNetworkRequest request(QUrl::fromEncoded(url.replace(QRegExp("&(?![\\w_]+=)"), "%26").toUtf8()));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     request.setRawHeader("Accept", "application/json");
     
     if (auth) {
-        request.setRawHeader("Authorization", "Basic " + QByteArray(QSettings().value("Authorization/token")
-                                                                               .toByteArray() + ":").toBase64());
+        request.setRawHeader("Authorization",
+							 "Basic " + QByteArray(QSettings().value("Authorization/token")
+												   .toByteArray() + ":").toBase64());
     }
     
     return request;

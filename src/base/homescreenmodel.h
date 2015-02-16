@@ -19,6 +19,11 @@
 #define HOMESCREENMODEL_H
 
 #include <QStringListModel>
+#if QT_VERSION >= 0x050000
+#include <qqml.h>
+#else
+#include <qdeclarative.h>
+#endif
 
 class HomescreenModel : public QStringListModel
 {
@@ -35,5 +40,7 @@ public:
 private:
     QHash<int, QByteArray> m_roleNames;
 };
+
+QML_DECLARE_TYPE(HomescreenModel)
 
 #endif // HOMESCREENMODEL_H

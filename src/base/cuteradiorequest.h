@@ -19,7 +19,11 @@
 #define CUTERADIOREQUEST_H
 
 #include "cuteradioreply.h"
+#if QT_VERSION >= 0x050000
+#include <qqml.h>
+#else
 #include <qdeclarative.h>
+#endif
 
 class CuteRadioRequest : public QObject
 {

@@ -20,7 +20,11 @@
 
 #include "cuteradioreply.h"
 #include <QStandardItemModel>
+#if QT_VERSION >= 0x050000
+#include <qqml.h>
+#else
 #include <qdeclarative.h>
+#endif
 
 class StationModel : public QStandardItemModel
 {

@@ -19,7 +19,11 @@
 #define STREAMEXTRACTOR_H
 
 #include <QNetworkReply>
+#if QT_VERSION >= 0x050000
+#include <qqml.h>
+#else
 #include <qdeclarative.h>
+#endif
 
 class QUrl;
 

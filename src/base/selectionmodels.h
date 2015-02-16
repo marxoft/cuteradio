@@ -20,6 +20,11 @@
 
 #include <QStandardItemModel>
 #include <qplatformdefs.h>
+#if QT_VERSION >= 0x050000
+#include <qqml.h>
+#else
+#include <qdeclarative.h>
+#endif
 
 class SelectionModel : public QStandardItemModel
 {
@@ -87,6 +92,11 @@ public:
 signals:
     void countChanged();
 };
+
+QML_DECLARE_TYPE(ActiveColorModel)
 #endif
+
+QML_DECLARE_TYPE(SelectionModel)
+QML_DECLARE_TYPE(ScreenOrientationModel)
 
 #endif // SELECTIONMODELS_H
