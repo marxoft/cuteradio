@@ -22,7 +22,7 @@ import Ubuntu.Components.Popups 1.0
 Dialog {
     id: root
     
-    title: i18n.tr("About cuteRadio")
+    title: "cuteradio " + VERSION_NUMBER
     contents: Column {
         width: parent.width
         spacing: units.gu(1)
