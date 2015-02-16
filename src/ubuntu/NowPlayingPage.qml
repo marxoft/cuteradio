@@ -25,8 +25,8 @@ Page {
     id: root
 
     title: player.metaData.title ? player.metaData.title : player.currentStation.title
-    head.actions: [		
-		SettingsAction {},
+    head.actions: [        
+        SettingsAction {},
         
         PlayUrlAction {}      
     ]

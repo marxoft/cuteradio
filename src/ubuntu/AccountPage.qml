@@ -21,79 +21,79 @@ import Ubuntu.Components.ListItems 1.0
 import org.marxoft.cuteradio 1.0
 
 Page {
-	id: root
-	
-	title: i18n.tr("Account")
-	
-	Flickable {
-		id: flicker
-		
-		anchors.fill: parent
-		contentHeight: column.height
-		
-		Column {
-			id: column
-			
-			anchors {
-				left: parent.left
-				right: parent.right
-				top: parent.top
-				margins: units.gu(1)
-			}
-			spacing: units.gu(1)
-			
-			Label {
-				width: parent.width
-				wrapMode: Text.WordWrap
-				horizontalAlignment: Text.AlignHCenter
-				text: i18n.tr("Please enter a username and password to create a cuteRadio account.")
-			}
-			
-			ThinDivider {}
-		
-			Label {
-				width: parent.width
-				text: i18n.tr("Username")
-			}
-		
-			TextField {
-				id: usernameField
-				
-				width: parent.width
-				inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
-				validator: RegExpValidator {
+    id: root
+    
+    title: i18n.tr("Account")
+    
+    Flickable {
+        id: flicker
+        
+        anchors.fill: parent
+        contentHeight: column.height
+        
+        Column {
+            id: column
+            
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: parent.top
+                margins: units.gu(1)
+            }
+            spacing: units.gu(1)
+            
+            Label {
+                width: parent.width
+                wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignHCenter
+                text: i18n.tr("Please enter a username and password to create a cuteRadio account.")
+            }
+            
+            ThinDivider {}
+        
+            Label {
+                width: parent.width
+                text: i18n.tr("Username")
+            }
+        
+            TextField {
+                id: usernameField
+                
+                width: parent.width
+                inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
+                validator: RegExpValidator {
                         regExp: /^[\w\-_]{6,}/
-				}
-				onAccepted: passwordField.forceActiveFocus()
-			}
-		
-			Label {
-				width: parent.width
-				text: i18n.tr("Password")
-			}
-		
-			TextField {
-				id: passwordField
-				
-				width: parent.width
-				echoMode: TextInput.Password
-				inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
-				validator: RegExpValidator {
-					regExp: /^[\w\-_]{6,}/
-				}
-			}
-			
-			Button {
-				x: Math.floor((column.width - width) / 2)
-				text: qsTr("Sign in")
-				color: UbuntuColors.green
-				enabled: (usernameField.acceptableInput) && (passwordField.acceptableInput)
-				onClicked: request.post()
-			}
-		}
-	}
-	
-	CuteRadioRequest {
+                }
+                onAccepted: passwordField.forceActiveFocus()
+            }
+        
+            Label {
+                width: parent.width
+                text: i18n.tr("Password")
+            }
+        
+            TextField {
+                id: passwordField
+                
+                width: parent.width
+                echoMode: TextInput.Password
+                inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
+                validator: RegExpValidator {
+                    regExp: /^[\w\-_]{6,}/
+                }
+            }
+            
+            Button {
+                x: Math.floor((column.width - width) / 2)
+                text: qsTr("Sign in")
+                color: UbuntuColors.green
+                enabled: (usernameField.acceptableInput) && (passwordField.acceptableInput)
+                onClicked: request.post()
+            }
+        }
+    }
+    
+    CuteRadioRequest {
         id: request
         
         url: TOKEN_URL

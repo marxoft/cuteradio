@@ -24,7 +24,7 @@ Page {
 
     title: i18n.tr("Stations by genre")
     head.actions: [
-		SettingsAction {},
+        SettingsAction {},
         
         PlayUrlAction {},
         
@@ -37,7 +37,7 @@ Page {
         anchors.fill: parent
         cacheBuffer: 400
         model: genreModel
-		pullToRefresh.enabled: true
+        pullToRefresh.enabled: true
         delegate: NameCountDelegate {
             onClicked: {
                 var name = genreModel.data(index, "name");
@@ -52,12 +52,12 @@ Page {
         section.property: "section"
         section.criteria: ViewSection.FirstCharacter
     }
-	
-	Scrollbar {
-		id: scrollBar
-		
-		flickableItem: view
-	}
+    
+    Scrollbar {
+        id: scrollBar
+        
+        flickableItem: view
+    }
 
     Label {
         id: noResultsLabel
@@ -93,11 +93,11 @@ Page {
             noResultsLabel.visible = (genreModel.count == 0);
         }
     }
-	
-	Connections {
-		target: view.pullToRefresh
-		onRefresh: genreModel.getGenres()
-	}
+    
+    Connections {
+        target: view.pullToRefresh
+        onRefresh: genreModel.getGenres()
+    }
     
     Component.onCompleted: if (genreModel.count == 0) genreModel.getGenres();
 }

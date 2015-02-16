@@ -24,7 +24,7 @@ Page {
 
     title: i18n.tr("Stations by country")
     head.actions: [
-		SettingsAction {},
+        SettingsAction {},
         
         PlayUrlAction {},
         
@@ -37,7 +37,7 @@ Page {
         anchors.fill: parent
         cacheBuffer: 400
         model: countryModel
-		pullToRefresh.enabled: true
+        pullToRefresh.enabled: true
         delegate: NameCountDelegate {
             onClicked: {
                 var name = countryModel.data(index, "name");
@@ -52,12 +52,12 @@ Page {
         section.property: "section"
         section.criteria: ViewSection.FirstCharacter
     }
-	
-	Scrollbar {
-		id: scrollBar
-		
-		flickableItem: view
-	}
+    
+    Scrollbar {
+        id: scrollBar
+        
+        flickableItem: view
+    }
 
     Label {
         id: noResultsLabel
@@ -93,11 +93,11 @@ Page {
             noResultsLabel.visible = (countryModel.count == 0);
         }
     }
-	
-	Connections {
-		target: view.pullToRefresh
-		onRefresh: countryModel.getCountries()
-	}
+    
+    Connections {
+        target: view.pullToRefresh
+        onRefresh: countryModel.getCountries()
+    }
     
     Component.onCompleted: if (countryModel.count == 0) countryModel.getCountries();
 }

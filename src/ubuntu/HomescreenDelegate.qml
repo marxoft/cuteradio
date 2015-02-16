@@ -20,6 +20,6 @@ import Ubuntu.Components 1.1
 import Ubuntu.Components.ListItems 1.0
 
 Standard {
-	text: name
-	progression: true
+    text: name
+    progression: true
 }

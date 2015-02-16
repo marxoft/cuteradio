@@ -24,7 +24,7 @@ Page {
 
     title: i18n.tr("Stations by language")
     head.actions: [
-		SettingsAction {},
+        SettingsAction {},
         
         PlayUrlAction {},
         
@@ -37,7 +37,7 @@ Page {
         anchors.fill: parent
         cacheBuffer: 400
         model: languageModel
-		pullToRefresh.enabled: true
+        pullToRefresh.enabled: true
         delegate: NameCountDelegate {
             onClicked: {
                 var name = languageModel.data(index, "name");
@@ -52,12 +52,12 @@ Page {
         section.property: "section"
         section.criteria: ViewSection.FirstCharacter
     }
-	
-	Scrollbar {
-		id: scrollBar
-		
-		flickableItem: view
-	}
+    
+    Scrollbar {
+        id: scrollBar
+        
+        flickableItem: view
+    }
 
     Label {
         id: noResultsLabel
@@ -93,11 +93,11 @@ Page {
             noResultsLabel.visible = (languageModel.count == 0);
         }
     }
-	
-	Connections {
-		target: view.pullToRefresh
-		onRefresh: languageModel.getLanguages()
-	}
+    
+    Connections {
+        target: view.pullToRefresh
+        onRefresh: languageModel.getLanguages()
+    }
     
     Component.onCompleted: if (languageModel.count == 0) languageModel.getLanguages();
 }

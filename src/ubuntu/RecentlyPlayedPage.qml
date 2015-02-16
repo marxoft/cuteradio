@@ -21,10 +21,10 @@ import org.marxoft.cuteradio 1.0
 
 Page {
     id: root
-	
-	title: i18n.tr("Recently played stations")
+    
+    title: i18n.tr("Recently played stations")
     head.actions: [
-		SettingsAction {},
+        SettingsAction {},
         
         PlayUrlAction {},
         
@@ -37,45 +37,45 @@ Page {
         anchors.fill: parent
         cacheBuffer: 400
         model: stationModel
-		pullToRefresh.enabled: true
+        pullToRefresh.enabled: true
         delegate: StationDelegate {
             menuItems: [
-				{ text: i18n.tr("Play"), iconName: "media-playback-start" },
-				{ text: i18n.tr("Show details"), iconName: "info" },
-				is_favourite ? { text: i18n.tr("Delete from favourites"), iconName: "unlike" }
+                { text: i18n.tr("Play"), iconName: "media-playback-start" },
+                { text: i18n.tr("Show details"), iconName: "info" },
+                is_favourite ? { text: i18n.tr("Delete from favourites"), iconName: "unlike" }
                              : { text: i18n.tr("Add to favourites"), iconName: "like" },
-				{ text: i18n.tr("Add to 'My stations'"), iconName: "add" }
-			]
+                { text: i18n.tr("Add to 'My stations'"), iconName: "add" }
+            ]
             onClicked: view.expandedIndex = (view.expandedIndex == index ? -1 : index)
-			onMenuItemClicked: {
-				switch (menuIndex) {
-				case 0:
-					player.playStation(stationModel.itemData(index));
-					break;
-				case 1:
-					pageStack.push(Qt.resolvedUrl("StationDetailsPage.qml"),
-								   { station: stationModel.itemData(index) });
-					break;
-				case 2:
-				{
-					if (is_favourite) {
-						request.deleteFromFavourites(favourite_id);
-					}
-					else {
-						request.addToFavourites(id);
-					}
-					
-					break;
-				}
-				case 3:
+            onMenuItemClicked: {
+                switch (menuIndex) {
+                case 0:
+                    player.playStation(stationModel.itemData(index));
+                    break;
+                case 1:
+                    pageStack.push(Qt.resolvedUrl("StationDetailsPage.qml"),
+                                   { station: stationModel.itemData(index) });
+                    break;
+                case 2:
+                {
+                    if (is_favourite) {
+                        request.deleteFromFavourites(favourite_id);
+                    }
+                    else {
+                        request.addToFavourites(id);
+                    }
+                    
+                    break;
+                }
+                case 3:
                     pageStack.push(addStationPage).station = stationModel.itemData(index);
                     break;
-				default:
-					break;
-				}
-				
-				view.expandedIndex = -1;
-			}	
+                default:
+                    break;
+                }
+                
+                view.expandedIndex = -1;
+            }    
         }
         section.delegate: SectionDelegate {
             text: section
@@ -85,8 +85,8 @@ Page {
     }
 
     Scrollbar {
-		id: scrollBar
-		
+        id: scrollBar
+        
         flickableItem: view
     }
 
@@ -177,13 +177,13 @@ Page {
             noResultsLabel.visible = (stationModel.count == 0);
         }
     }
-	
-	Connections {
-		target: view.pullToRefresh
-		onRefresh: stationModel.getRecentlyPlayedStations()
-	}
-	
-	Component.onCompleted: {
+    
+    Connections {
+        target: view.pullToRefresh
+        onRefresh: stationModel.getRecentlyPlayedStations()
+    }
+    
+    Component.onCompleted: {
         if ((stationModel.source != "recentlyplayed") || (stationModel.count == 0)) {
             stationModel.source = "recentlyplayed";
             stationModel.getRecentlyPlayedStations();

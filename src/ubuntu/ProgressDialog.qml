@@ -20,22 +20,22 @@ import Ubuntu.Components 1.1
 import Ubuntu.Components.Popups 1.0
 
 Dialog {
-	id: root
-	
-	signal rejected
-	
-	function showProgress(info) {
+    id: root
+    
+    signal rejected
+    
+    function showProgress(info) {
         root.text = info;
         root.show();
     }
-	
-	Button {
-		text: i18n.tr("Cancel")
+    
+    Button {
+        text: i18n.tr("Cancel")
         iconName: "cancel"
-		color: UbuntuColors.red
-		onClicked: {
-			root.rejected();
-			root.hide();
-		}
-	}
+        color: UbuntuColors.red
+        onClicked: {
+            root.rejected();
+            root.hide();
+        }
+    }
 }

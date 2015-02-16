@@ -21,8 +21,8 @@ import org.marxoft.cuteradio 1.0
 
 Page {
     id: root
-	
-	title: i18n.tr("My stations")
+    
+    title: i18n.tr("My stations")
     head.actions: [
         Action {
             iconName: "add"
@@ -30,7 +30,7 @@ Page {
             onTriggered: pageStack.push(addStationPage)
         },
         
-		SettingsAction {},
+        SettingsAction {},
         
         PlayUrlAction {},
         
@@ -43,39 +43,39 @@ Page {
         anchors.fill: parent
         cacheBuffer: 400
         model: stationModel
-		pullToRefresh.enabled: true
+        pullToRefresh.enabled: true
         delegate: StationDelegate {
             menuItems: [
-				{ text: i18n.tr("Play"), iconName: "media-playback-start" },
-				{ text: i18n.tr("Show details"), iconName: "info" },
-				{ text: i18n.tr("Edit details"), iconName: "edit" },
-				{ text: i18n.tr("Delete from 'My stations'"), iconName: "delete" }
-			]
+                { text: i18n.tr("Play"), iconName: "media-playback-start" },
+                { text: i18n.tr("Show details"), iconName: "info" },
+                { text: i18n.tr("Edit details"), iconName: "edit" },
+                { text: i18n.tr("Delete from 'My stations'"), iconName: "delete" }
+            ]
             onClicked: view.expandedIndex = (view.expandedIndex == index ? -1 : index)
-			onMenuItemClicked: {
-				switch (menuIndex) {
-				case 0:
-					player.playStation(stationModel.itemData(index));
-					break;
-				case 1:
-					pageStack.push(Qt.resolvedUrl("StationDetailsPage.qml"),
-								   { station: stationModel.itemData(index) });
-					break;
-				case 2: {
+            onMenuItemClicked: {
+                switch (menuIndex) {
+                case 0:
+                    player.playStation(stationModel.itemData(index));
+                    break;
+                case 1:
+                    pageStack.push(Qt.resolvedUrl("StationDetailsPage.qml"),
+                                   { station: stationModel.itemData(index) });
+                    break;
+                case 2: {
                     var page = pageStack.push(addStationPage);
                     page.station = stationModel.itemData(index);
                     page.mode = "edit";
                     break;
                 }
-				case 3:
-					request.deleteFromMyStations(id);
-					break;
-				default:
-					break;
-				}
-				
-				view.expandedIndex = -1;
-			}	
+                case 3:
+                    request.deleteFromMyStations(id);
+                    break;
+                default:
+                    break;
+                }
+                
+                view.expandedIndex = -1;
+            }    
         }
         section.delegate: SectionDelegate {
             text: section
@@ -85,8 +85,8 @@ Page {
     }
 
     Scrollbar {
-		id: scrollBar
-		
+        id: scrollBar
+        
         flickableItem: view
     }
 
@@ -175,13 +175,13 @@ Page {
             noResultsLabel.visible = (stationModel.count == 0);
         }
     }
-	
-	Connections {
-		target: view.pullToRefresh
-		onRefresh: stationModel.getMyStations()
-	}
-	
-	Component.onCompleted: {
+    
+    Connections {
+        target: view.pullToRefresh
+        onRefresh: stationModel.getMyStations()
+    }
+    
+    Component.onCompleted: {
         if ((stationModel.source != "mystations") || (stationModel.count == 0)) {
             stationModel.source = "mystations";
             stationModel.getMyStations();

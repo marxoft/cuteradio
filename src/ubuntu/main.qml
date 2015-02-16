@@ -28,25 +28,25 @@ MainView {
     applicationName: "cuteradio"
     useDeprecatedToolbar: false
     automaticOrientation: Settings.screenOrientation == 0
-    	
-	PageStack {
-		id: pageStack
-	}
-	
-	ProgressDialog {
-		id: progressDialog
-	}
-	
-	QtObject {
-		id: infoBanner
+        
+    PageStack {
+        id: pageStack
+    }
+    
+    ProgressDialog {
+        id: progressDialog
+    }
+    
+    QtObject {
+        id: infoBanner
         
         function showMessage(message) {
             var banner = PopupUtils.open(Qt.resolvedUrl("InfoBanner.qml"), pageStack.currentPage);
             banner.text = message;
         }
-	}
-	
-	Audio {
+    }
+    
+    Audio {
         id: player
         
         property variant currentStation: {
@@ -105,8 +105,8 @@ MainView {
             }
         }
     }
-	
-	StreamExtractor {
+    
+    StreamExtractor {
         id: extractor
         
         onStatusChanged: {
@@ -154,6 +154,6 @@ MainView {
     NameCountModel {
         id: languageModel
     }
-		
-	Component.onCompleted: pageStack.push(Qt.resolvedUrl("MainPage.qml"))
+        
+    Component.onCompleted: pageStack.push(Qt.resolvedUrl("MainPage.qml"))
 }

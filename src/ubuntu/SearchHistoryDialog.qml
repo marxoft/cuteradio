@@ -22,21 +22,21 @@ import Ubuntu.Components.ListItems 1.0 as ListItem
 import org.marxoft.cuteradio 1.0
 
 Popover {
-	id: root
-	
-	UbuntuListView {
-		id: view
-		
-		height: units.gu(24)
-		anchors {
-			left: parent.left
-			right: parent.right
-			top: parent.top
-		}
-		model: NameCountModel {
-			id: searchModel
-			
-			onStatusChanged: {
+    id: root
+    
+    UbuntuListView {
+        id: view
+        
+        height: units.gu(24)
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
+        }
+        model: NameCountModel {
+            id: searchModel
+            
+            onStatusChanged: {
                 switch (status) {
                 case NameCountModel.Loading: {
                     progressIndicator.visible = true;
@@ -53,17 +53,17 @@ Popover {
                 progressIndicator.visible = false;
                 noResultsLabel.visible = (searchModel.count == 0);
             }
-		}
-		header: ListItem.Header {
-			text: i18n.tr("Previous searches")
-		}
-		delegate: ListItem.Standard {
-			text: name
-			onClicked: {
-				PopupUtils.close(root);
-				pageStack.push(Qt.resolvedUrl("SearchPage.qml"), { query: searchModel.data(index, "name") });
-			}
-		}
+        }
+        header: ListItem.Header {
+            text: i18n.tr("Previous searches")
+        }
+        delegate: ListItem.Standard {
+            text: name
+            onClicked: {
+                PopupUtils.close(root);
+                pageStack.push(Qt.resolvedUrl("SearchPage.qml"), { query: searchModel.data(index, "name") });
+            }
+        }
         
         Label {
             id: noResultsLabel
@@ -78,15 +78,15 @@ Popover {
             text: i18n.tr("No searches found")
             visible: false
         }
-	
+    
         ActivityIndicator {
             id: progressIndicator
-		
+        
             anchors.centerIn: parent
             running: visible
             visible: false
         }
-	}
+    }
     
     Component.onCompleted: searchModel.getSearches()
 }

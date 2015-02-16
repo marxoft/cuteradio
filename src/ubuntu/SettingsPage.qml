@@ -37,7 +37,7 @@ Page {
                 left: parent.left
                 right: parent.right
                 top: parent.top
-				margins: units.gu(1)
+                margins: units.gu(1)
             }
             spacing: units.gu(1)
 
@@ -45,15 +45,15 @@ Page {
                 spacing: units.gu(1)
 
                 Label {
-					height: sleepTimerField.height
+                    height: sleepTimerField.height
                     width: column.width - sleepTimerField.width - units.gu(1)
                     verticalAlignment: Text.AlignVCenter
                     text: i18n.tr("Sleep timer duration (mins)")
                 }
 
                 TextField {
-					id: sleepTimerField
-					
+                    id: sleepTimerField
+                    
                     width: playedSwitch.width
                     inputMethodHints: Qt.ImhDigitsOnly
                     maximumLength: 3
@@ -65,41 +65,41 @@ Page {
                     onTextChanged: if (acceptableInput) Settings.sleepTimerDuration = parseInt(text);
                 }
             }
-			
-			Row {
+            
+            Row {
                 spacing: units.gu(1)
 
                 Label {
-					height: playedSwitch.height
+                    height: playedSwitch.height
                     width: column.width - playedSwitch.width - units.gu(1)
                     verticalAlignment: Text.AlignVCenter
                     text: i18n.tr("Send played stations data")
                 }
 
                 Switch {
-					id: playedSwitch
+                    id: playedSwitch
                 
                     checked: Settings.sendPlayedStationsData
-					onClicked: Settings.sendPlayedStationsData = checked
-				}
+                    onClicked: Settings.sendPlayedStationsData = checked
+                }
             }
-			
-			Row {
+            
+            Row {
                 spacing: units.gu(1)
 
                 Label {
-					height: orientationSwitch.height
+                    height: orientationSwitch.height
                     width: column.width - orientationSwitch.width - units.gu(1)
                     verticalAlignment: Text.AlignVCenter
                     text: i18n.tr("Lock screen orientation")
                 }
 
                 Switch {
-					id: orientationSwitch
+                    id: orientationSwitch
 
                     checked: Settings.screenOrientation != 0
-					onClicked: Settings.screenOrientation = (checked ? 1 : 0)
-				}
+                    onClicked: Settings.screenOrientation = (checked ? 1 : 0)
+                }
             }
         }
     }

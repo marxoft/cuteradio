@@ -22,5 +22,5 @@ import Ubuntu.Components.ListItems 1.0
 Subtitled {
     text: name
     subText: item_count + " " + i18n.tr("stations")
-	progression: true
+    progression: true
 }

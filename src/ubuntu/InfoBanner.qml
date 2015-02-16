@@ -19,7 +19,7 @@ import Ubuntu.Components 1.1
 import Ubuntu.Components.Popups 1.0
 
 Popover {
-	id: root
+    id: root
 
     property alias text: label.text
     
@@ -40,13 +40,13 @@ Popover {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
     }
-	
-	Timer {
-		id: timer
-		
-		interval: 3000
-		repeat: false
-		running: root.visible
-		onTriggered: PopupUtils.close(root)
-	}
+    
+    Timer {
+        id: timer
+        
+        interval: 3000
+        repeat: false
+        running: root.visible
+        onTriggered: PopupUtils.close(root)
+    }
 }

@@ -45,7 +45,7 @@ Page {
             onTriggered: pageStack.push(addStationPage).station = station
         },
     
-		SettingsAction {},
+        SettingsAction {},
         
         PlayUrlAction {},
         

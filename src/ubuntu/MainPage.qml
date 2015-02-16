@@ -21,21 +21,21 @@ import Ubuntu.Components.Popups 1.0
 import org.marxoft.cuteradio 1.0
 
 Page {
-	id: root
-	
-	title: "cuteRadio"
-	state: "default"
+    id: root
+    
+    title: "cuteRadio"
+    state: "default"
     states: [
         PageHeadState {
             name: "default"
             head: root.head
             actions: [
-				Action {
+                Action {
                     text: i18n.tr("Search")
-					iconName: "search"
-					enabled: Settings.token != ""
-					onTriggered: root.state = "search"
-				},
+                    iconName: "search"
+                    enabled: Settings.token != ""
+                    onTriggered: root.state = "search"
+                },
                 
                 SettingsAction {},
                 
@@ -44,16 +44,16 @@ Page {
                 NowPlayingAction {},
                 
                 AboutAction {}
-			]
+            ]
         },
-		
+        
         PageHeadState {
             name: "search"
             head: root.head
             actions: Action {                
                 text: i18n.tr("Previous searches")
                 iconName: "history"
-				onTriggered: PopupUtils.open(Qt.resolvedUrl("SearchHistoryDialog.qml"), view)
+                onTriggered: PopupUtils.open(Qt.resolvedUrl("SearchHistoryDialog.qml"), view)
             }
             backAction: Action {
                 text: i18n.tr("Exit search")
@@ -62,72 +62,72 @@ Page {
             }
             contents: TextField {
                 placeholderText: i18n.tr("Search")
-				validator: RegExpValidator {
-					regExp: /^.+/
-				}
+                validator: RegExpValidator {
+                    regExp: /^.+/
+                }
                 onVisibleChanged: text = ""
-				onAccepted: {
-					if (text) {
-						pageStack.push(Qt.resolvedUrl("SearchPage.qml"), { query: text });
-					}					
-				}
+                onAccepted: {
+                    if (text) {
+                        pageStack.push(Qt.resolvedUrl("SearchPage.qml"), { query: text });
+                    }                    
+                }
             }
         }
     ]
-		
-	UbuntuListView {
-		id: view
-		
-		anchors.fill: parent
-		model: HomescreenModel {}
-		delegate: HomescreenDelegate {
-			onClicked: {
-				if (!Settings.token) {
-					pageStack.push(Qt.resolvedUrl("AccountPage.qml"));
-				}
-				else {
-					switch (index) {
-					case 0: {
-						pageStack.push(Qt.resolvedUrl("StationsPage.qml"), { title: i18n.tr("All stations") });
+        
+    UbuntuListView {
+        id: view
+        
+        anchors.fill: parent
+        model: HomescreenModel {}
+        delegate: HomescreenDelegate {
+            onClicked: {
+                if (!Settings.token) {
+                    pageStack.push(Qt.resolvedUrl("AccountPage.qml"));
+                }
+                else {
+                    switch (index) {
+                    case 0: {
+                        pageStack.push(Qt.resolvedUrl("StationsPage.qml"), { title: i18n.tr("All stations") });
                     
-						if ((stationModel.source != "stations") || (stationModel.count == 0)) {
-							stationModel.source = "stations";
-							stationModel.getStations();
-						}
+                        if ((stationModel.source != "stations") || (stationModel.count == 0)) {
+                            stationModel.source = "stations";
+                            stationModel.getStations();
+                        }
                     
-						break;
-					}
-					case 1:
-						pageStack.push(Qt.resolvedUrl("GenresPage.qml"), {});
-						break;
-					case 2:
-						pageStack.push(Qt.resolvedUrl("CountriesPage.qml"), {});
-						break;
-					case 3:
-						pageStack.push(Qt.resolvedUrl("LanguagesPage.qml"), {});
-						break;
-					case 4:
-						pageStack.push(Qt.resolvedUrl("RecentlyPlayedPage.qml"), {});
-						break;
-					case 5:
-						pageStack.push(Qt.resolvedUrl("FavouritesPage.qml"), {});
-						break;
-					case 6:
-						pageStack.push(Qt.resolvedUrl("MyStationsPage.qml"), {});
-						break;
-					default:
-						break;
-					}
-				}                
-			}
-		}
-	}
-	
-	Scrollbar {
-		id: scrollBar
-		
-		flickableItem: view
-	}
+                        break;
+                    }
+                    case 1:
+                        pageStack.push(Qt.resolvedUrl("GenresPage.qml"), {});
+                        break;
+                    case 2:
+                        pageStack.push(Qt.resolvedUrl("CountriesPage.qml"), {});
+                        break;
+                    case 3:
+                        pageStack.push(Qt.resolvedUrl("LanguagesPage.qml"), {});
+                        break;
+                    case 4:
+                        pageStack.push(Qt.resolvedUrl("RecentlyPlayedPage.qml"), {});
+                        break;
+                    case 5:
+                        pageStack.push(Qt.resolvedUrl("FavouritesPage.qml"), {});
+                        break;
+                    case 6:
+                        pageStack.push(Qt.resolvedUrl("MyStationsPage.qml"), {});
+                        break;
+                    default:
+                        break;
+                    }
+                }                
+            }
+        }
+    }
+    
+    Scrollbar {
+        id: scrollBar
+        
+        flickableItem: view
+    }
     
     onVisibleChanged: if (!visible) state = "default";
 }
