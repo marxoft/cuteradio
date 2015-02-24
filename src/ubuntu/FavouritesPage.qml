@@ -30,6 +30,29 @@ Page {
         
         NowPlayingAction {}
     ]
+    
+    ActionList {
+        id: delegateActions
+        
+        Action {
+            text: i18n.tr("Play")
+            iconName: "media-playback-start"
+            onTriggered: player.playStation(stationModel.itemData(view.expandedIndex))
+        }
+        
+        Action {
+            text: i18n.tr("Show details")
+            iconName: "info"
+            onTriggered: pageStack.push(Qt.resolvedUrl("StationDetailsPage.qml"),
+                           { station: stationModel.itemData(view.expandedIndex) })
+        }
+        
+        Action {
+            text: i18n.tr("Add to 'My stations'")
+            iconName: "add"
+            onTriggered: pageStack.push(addStationPage).station = stationModel.itemData(view.expandedIndex)
+        }
+    }
 
     UbuntuListView {
         id: view
@@ -39,34 +62,11 @@ Page {
         model: stationModel
         pullToRefresh.enabled: true
         delegate: StationDelegate {
-            menuItems: [
-                { text: i18n.tr("Play"), iconName: "media-playback-start" },
-                { text: i18n.tr("Show details"), iconName: "info" },
-                { text: i18n.tr("Delete from favourites"), iconName: "unlike" },
-                { text: i18n.tr("Add to 'My stations'"), iconName: "add" }
-            ]
-            onClicked: view.expandedIndex = (view.expandedIndex == index ? -1 : index)
-            onMenuItemClicked: {
-                switch (menuIndex) {
-                case 0:
-                    player.playStation(stationModel.itemData(index));
-                    break;
-                case 1:
-                    pageStack.push(Qt.resolvedUrl("StationDetailsPage.qml"),
-                                   { station: stationModel.itemData(index) });
-                    break;
-                case 2:
-                    request.deleteFromFavourites(favourite_id);
-                    break;
-                case 3:
-                    pageStack.push(addStationPage).station = stationModel.itemData(index);
-                    break;
-                default:
-                    break;
-                }
-                
-                view.expandedIndex = -1;
-            }    
+            actions: delegateActions.actions
+            removable: true
+            confirmRemoval: true
+            onItemRemoved: request.deleteFromFavourites(favourite_id)
+            onClicked: view.expandedIndex = (view.expandedIndex == index ? -1 : index)    
         }
         section.delegate: SectionDelegate {
             text: section

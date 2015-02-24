@@ -29,6 +29,38 @@ Page {
         
         NowPlayingAction {}
     ]
+    
+    ActionList {
+        id: delegateActions
+        
+        Action {
+            text: i18n.tr("Play")
+            iconName: "media-playback-start"
+            onTriggered: player.playStation(stationModel.itemData(view.expandedIndex))
+        }
+        
+        Action {
+            text: i18n.tr("Show details")
+            iconName: "info"
+            onTriggered: pageStack.push(Qt.resolvedUrl("StationDetailsPage.qml"),
+                                        { station: stationModel.itemData(view.expandedIndex) })
+        }
+        
+        Action {
+            text: stationModel.data(view.expandedIndex, "is_favourite") ? i18n.tr("Delete from favourites")
+                                                                        : i18n.tr("Add to favourites")
+            iconName: stationModel.data(view.expandedIndex, "is_favourite") ? "non-starred" : "starred"
+            onTriggered: stationModel.data(view.expandedIndex, "is_favourite") 
+                        ? request.deleteFromFavourites(stationModel.data(view.expandedIndex, "favourite_id"))
+                        : request.addToFavourites(stationModel.data(view.expandedIndex, "id"))
+        }
+        
+        Action {
+            text: i18n.tr("Add to 'My stations'")
+            iconName: "add"
+            onTriggered: pageStack.push(addStationPage).station = stationModel.itemData(view.expandedIndex)
+        }
+    }
 
     UbuntuListView {
         id: view
@@ -38,43 +70,8 @@ Page {
         model: stationModel
         pullToRefresh.enabled: true
         delegate: StationDelegate {
-            menuItems: [
-                { text: i18n.tr("Play"), iconName: "media-playback-start" },
-                { text: i18n.tr("Show details"), iconName: "info" },
-                is_favourite ? { text: i18n.tr("Delete from favourites"), iconName: "unlike" }
-                             : { text: i18n.tr("Add to favourites"), iconName: "like" },
-                { text: i18n.tr("Add to 'My stations'"), iconName: "add" }
-            ]
-            onClicked: view.expandedIndex = (view.expandedIndex == index ? -1 : index)
-            onMenuItemClicked: {
-                switch (menuIndex) {
-                case 0:
-                    player.playStation(stationModel.itemData(index));
-                    break;
-                case 1:
-                    pageStack.push(Qt.resolvedUrl("StationDetailsPage.qml"),
-                                   { station: stationModel.itemData(index) });
-                    break;
-                case 2:
-                {
-                    if (is_favourite) {
-                        request.deleteFromFavourites(favourite_id);
-                    }
-                    else {
-                        request.addToFavourites(id);
-                    }
-                    
-                    break;
-                }
-                case 3:
-                    pageStack.push(addStationPage).station = stationModel.itemData(index);
-                    break;
-                default:
-                    break;
-                }
-                
-                view.expandedIndex = -1;
-            }    
+            actions: delegateActions.actions
+            onClicked: view.expandedIndex = (view.expandedIndex == index ? -1 : index)    
         }
         section.delegate: SectionDelegate {
             text: section

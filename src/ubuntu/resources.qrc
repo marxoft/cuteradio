@@ -6,6 +6,7 @@
 		<file>AccountPage.qml</file>
         <file>AddStationPage.qml</file>
 		<file>CountriesPage.qml</file>
+        <file>ExpandableDelegate.qml</file>
 		<file>FavouritesPage.qml</file>
 		<file>GenresPage.qml</file>
 		<file>HomescreenDelegate.qml</file>

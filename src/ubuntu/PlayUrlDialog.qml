@@ -44,16 +44,7 @@ Dialog {
             }
             onAccepted: acceptButton.clicked()
         }
-    }
-    
-    Button {
-        id: cancelButton
-        
-        text: i18n.tr("Cancel")
-        iconName: "cancel"
-        color: UbuntuColors.red
-        onClicked: PopupUtils.close(root);
-    }
+    }    
     
     Button {
         id: acceptButton
@@ -77,5 +68,14 @@ Dialog {
             player.playStation(station);
             PopupUtils.close(root);
         }
+    }
+    
+    Button {
+        id: cancelButton
+        
+        text: i18n.tr("Cancel")
+        iconName: "cancel"
+        color: UbuntuColors.red
+        onClicked: PopupUtils.close(root);
     }
 }
