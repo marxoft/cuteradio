@@ -1,5 +1,4 @@
-cuteRadio
-=========
+#cuteRadio
 
 cuteRadio is a user-friendly internet radio player and client for the cuteRadio REST API.
 

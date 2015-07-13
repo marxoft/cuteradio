@@ -8,7 +8,7 @@ Homepage: https://github.com/marxoft/cuteradio
 
 Package: cuteradio
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, qt-components-hildon (>= 0.12.1)
+Depends: ${shlibs:Depends}, ${misc:Depends}, qt-components-hildon (>= 0.13.0)
 Description: Internet radio player
  cuteRadio is a user-friendly internet radio player and client for the cuteRadio internet radio service.
  Features include access to recently played stations, favourite stations and a sleep timer.

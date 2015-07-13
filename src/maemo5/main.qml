@@ -1,204 +1,214 @@
 /*
- * Copyright (C) 2014 Stuart Howarth <showarth@marxoft.co.uk>
+ * Copyright (C) 2015 Stuart Howarth <showarth@marxoft.co.uk>
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms and conditions of the GNU Lesser General Public License,
- * version 3, as published by the Free Software Foundation.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
  *
- * This program is distributed in the hope it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
- * more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St - Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
+import QtQuick 1.0
 import org.hildon.components 1.0
 import org.hildon.multimedia 1.0
 import org.marxoft.cuteradio 1.0
 
-Window {
+ApplicationWindow {
     id: window
     
-    windowTitle: "cuteRadio"
-    tools: [
-        NowPlayingAction {},
+    visible: true
+    title: "cuteRadio"
+    menuBar: MenuBar {
+        NowPlayingMenuItem {}
         
-        SleepTimerAction {},
+        SleepTimerMenuItem {}
         
-        Action {
+        MenuItem {
             text: qsTr("Play URL")
-            onTriggered: {
-                loader.sourceComponent = urlDialog;
-                loader.item.open();
-            }
-        },
+            onTriggered: dialogs.showUrlDialog()
+        }
         
-        Action {
+        MenuItem {
             text: qsTr("Search")
             enabled: Settings.token != ""
-            onTriggered: {
-                loader.sourceComponent = searchDialog;
-                loader.item.open();
-            }
-        },
+            onTriggered: dialogs.showSearchDialog()
+        }
         
-        Action {
+        MenuItem {
             text: qsTr("Account")
             enabled: Settings.token == ""
-            onTriggered: {
-                loader.sourceComponent = accountDialog;
-                loader.item.open();
-            }
-        },
+            onTriggered: dialogs.showAccountDialog()
+        }
         
-        Action {
+        MenuItem {
             text: qsTr("Settings")
-            onTriggered: {
-                loader.sourceComponent = settingsDialog;
-                loader.item.open();
-            }
-        },
+            onTriggered: dialogs.showSettingsDialog()
+        }
         
-        Action {
+        MenuItem {
             text: qsTr("About")
-            onTriggered: {
-                loader.sourceComponent = aboutDialog;
-                loader.item.open();
-            }
+            onTriggered: dialogs.showAboutDialog()
         }
-    ]
-    
-    actions: [
-        Action {
-            shortcut: "Ctrl+U"
-            onTriggered: {
-                loader.sourceComponent = urlDialog;
-                loader.item.open();
-            }
-        },
-        
-        Action {
-            shortcut: "Ctrl+S"
-            enabled: Settings.token != ""
-            onTriggered: {
-                loader.sourceComponent = searchDialog;
-                loader.item.open();
-            }
-        }
-    ]
+    }
     
     ListView {
         id: view
         
         anchors.fill: parent
-        focusPolicy: Qt.NoFocus
+        focus: true
         model: HomescreenModel {}
-        delegate: HomescreenDelegate {}
-        onClicked: {
-            if (!Settings.token) {
-                infobox.showMessage(qsTr("Please login or register a cuteRadio account"));
-                loader.sourceComponent = accountDialog;
-                loader.item.open();
-            }
-            else {
-                switch (QModelIndex.row(currentIndex)) {
-                case 0: {
-                    pageStack.push(Qt.resolvedUrl("StationsPage.qml"), { windowTitle: qsTr("All stations") });
+        delegate: HomescreenDelegate {
+            onClicked: {
+                if (!Settings.token) {
+                    informationBox.information(qsTr("Please login or register a cuteRadio account"));
+                    loader.sourceComponent = accountDialog;
+                    loader.item.open();
+                }
+                else {
+                    switch (index) {
+                    case 0: {
+                        windowStack.push(Qt.resolvedUrl("StationsWindow.qml"), { title: qsTr("All stations") });
                     
-                    if ((stationModel.source != "stations") || (stationModel.count == 0)) {
-                        stationModel.source = "stations";
-                        stationModel.getStations();
+                        if ((stationModel.source != "stations") || (stationModel.count == 0)) {
+                            stationModel.source = "stations";
+                            stationModel.getStations();
+                        }
+                    
+                        break;
                     }
-                    
-                    break;
-                }
-                case 1:
-                    pageStack.push(Qt.resolvedUrl("GenresPage.qml"), {});
-                    break;
-                case 2:
-                    pageStack.push(Qt.resolvedUrl("CountriesPage.qml"), {});
-                    break;
-                case 3:
-                    pageStack.push(Qt.resolvedUrl("LanguagesPage.qml"), {});
-                    break;
-                case 4:
-                    pageStack.push(Qt.resolvedUrl("RecentlyPlayedPage.qml"), {});
-                    break;
-                case 5:
-                    pageStack.push(Qt.resolvedUrl("FavouritesPage.qml"), {});
-                    break;
-                case 6:
-                    pageStack.push(Qt.resolvedUrl("MyStationsPage.qml"), {});
-                    break;
-                default:
-                    break;
-                }
+                    case 1:
+                        windowStack.push(Qt.resolvedUrl("GenresWindow.qml"));
+                        break;
+                    case 2:
+                        windowStack.push(Qt.resolvedUrl("CountriesWindow.qml"));
+                        break;
+                    case 3:
+                        windowStack.push(Qt.resolvedUrl("LanguagesWindow.qml"));
+                        break;
+                    case 4:
+                        windowStack.push(Qt.resolvedUrl("RecentlyPlayedWindow.qml"));
+                        break;
+                    case 5:
+                        windowStack.push(Qt.resolvedUrl("FavouritesWindow.qml"));
+                        break;
+                    case 6:
+                        windowStack.push(Qt.resolvedUrl("MyStationsWindow.qml"));
+                        break;
+                    default:
+                        break;
+                    }
+                }            
             }
-            
-            currentIndex = QModelIndex.parent(currentIndex);
         }
     }
     
     InformationBox {
-        id: infobox
+        id: informationBox
         
-        function showMessage(message) {
-            minimumHeight = 70;
-            timeout = InformationBox.DefaultTimeout;
+        function information(message) {
             infoLabel.text = message;
             open();
         }
         
-        function showError(message) {
-            minimumHeight = 120;
-            timeout = InformationBox.NoTimeout;
-            infoLabel.text = message;
-            open();
-        }
+        height: infoLabel.height + platformStyle.paddingLarge
         
-        content: Label {
+        Label {
             id: infoLabel
             
-            anchors.fill: parent
-            alignment: Qt.AlignCenter
+            anchors {
+                fill: parent
+                leftMargin: platformStyle.paddingLarge
+                rightMargin: platformStyle.paddingLarge
+            }
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
             color: platformStyle.reversedTextColor
-            wordWrap: true
+            wrapMode: Text.WordWrap
         }
     }
     
-    Loader {
-        id: loader
+    QtObject {
+        id: dialogs
+        
+        property SearchDialog searchDialog
+        property PlayUrlDialog urlDialog
+        property AccountDialog accountDialog
+        property SettingsDialog settingsDialog
+        property AboutDialog aboutDialog
+        
+        function showSearchDialog() {
+            if (!searchDialog) {
+                searchDialog = searchDialogComponent.createObject(window);
+            }
+            
+            searchDialog.open();
+        }
+        
+        function showUrlDialog() {
+            if (!urlDialog) {
+                urlDialog = urlDialogComponent.createObject(window);
+            }
+            
+            urlDialog.open();
+        }
+        
+        function showAccountDialog() {
+            if (!accountDialog) {
+                accountDialog = accountDialogComponent.createObject(window);
+            }
+            
+            accountDialog.open();
+        }
+        
+        function showSettingsDialog() {
+            if (!settingsDialog) {
+                settingsDialog = settingsDialogComponent.createObject(window);
+            }
+            
+            settingsDialog.open();
+        }
+        
+        function showAboutDialog() {
+            if (!aboutDialog) {
+                aboutDialog = aboutDialogComponent.createObject(window);
+            }
+            
+            aboutDialog.open();
+        }        
     }
     
     Component {
-        id: searchDialog
+        id: searchDialogComponent
         
         SearchDialog {}
     }
     
     Component {
-        id: urlDialog
+        id: urlDialogComponent
         
         PlayUrlDialog {}
     }
     
     Component {
-        id: accountDialog
+        id: accountDialogComponent
         
         AccountDialog {}
     }
     
     Component {
-        id: settingsDialog
+        id: settingsDialogComponent
         
         SettingsDialog {}
     }
     
     Component {
-        id: aboutDialog
+        id: aboutDialogComponent
         
         AboutDialog {}
     }
@@ -240,7 +250,7 @@ Window {
         }
         
         tickInterval: 0
-        onError: infobox.showError(errorString)
+        onError: informationBox.information(errorString)
         onStarted: if ((Settings.sendPlayedStationsData)
                        && (Settings.token)
                        && (currentStation.id))
@@ -277,7 +287,7 @@ Window {
         onStatusChanged: {
             switch (status) {
             case StreamExtractor.Loading:
-                infobox.showMessage(qsTr("Retrieving the stream URL from the playlist"));
+                informationBox.information(qsTr("Retrieving the stream URL from the playlist"));
                 break;
             case StreamExtractor.Ready: {
                 playlist.clearItems();
@@ -286,7 +296,7 @@ Window {
                 break;
             }
             case StreamExtractor.Error:
-                infobox.showError(errorString);
+                informationBox.information(errorString);
                 break;
             default:
                 break;
@@ -300,7 +310,7 @@ Window {
         url: RECENTLY_PLAYED_STATIONS_URL
         data: { "station_id": player.currentStation.id }
         authRequired: true
-        onStatusChanged: if (status == CuteRadioRequest.Error) infobox.showError(errorString);
+        onStatusChanged: if (status == CuteRadioRequest.Error) informationBox.information(errorString);
     }
     
     StationModel {

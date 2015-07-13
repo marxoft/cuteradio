@@ -17,35 +17,16 @@
 import QtQuick 1.0
 import org.hildon.components 1.0
 
-ListItem {
+MenuItem {
     id: root
     
-    Label {
-        anchors {
-            left: parent.left
-            leftMargin: platformStyle.paddingMedium
-            right: image.left
-            rightMargin: platformStyle.paddingMedium
-            top: parent.top
-            bottom: parent.bottom
-        }
-        verticalAlignment: Text.AlignVCenter
-        elide: Text.ElideRight
-        font.bold: true
-        text: name
-    }
+    enabled: player.currentStation.id != ""
     
-    Image {
-        id: image
-        
-        width: 48
-        height: 48
-        anchors {
-            right: parent.right
-            rightMargin: platformStyle.paddingMedium
-            verticalCenter: parent.verticalCenter
-        }
-        source: "image://icon/general_forward"
-        smooth: true
+    ValueButton {
+        iconSource: player.playing ? "/etc/hildon/theme/mediaplayer/Play.png" : "/etc/hildon/theme/mediaplayer/Stop.png"
+        text: player.currentStation.title
+        valueText: (!player.metaData.title) || (player.metaData.title == player.source.substring(player.source.lastIndexOf("/") + 1))
+                    ? qsTr("(unknown song)") : player.metaData.title
+        onClicked: windowStack.push(Qt.resolvedUrl("NowPlayingWindow.qml"))
     }
 }

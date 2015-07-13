@@ -123,9 +123,9 @@ contains(DEFINES,UBUNTU-TOUCH) {
     RESOURCES += src/ubuntu/resources.qrc
     OTHER_FILES += $$files(src/ubuntu/*.qml)
 
-    UBUNTU_MANIFEST_FILE=desktop/ubuntu/manifest.json.in
-    UBUNTU_TRANSLATION_DOMAIN="cuteradio.marxoft"
-    UBUNTU_TRANSLATION_SOURCES+= \
+    UBUNTU_MANIFEST_FILE = desktop/ubuntu/manifest.json.in
+    UBUNTU_TRANSLATION_DOMAIN = "cuteradio.marxoft"
+    UBUNTU_TRANSLATION_SOURCES += \
         $$files(src/base/*.*, true) \
         $$files(src/ubuntu/*.qml,true)
     UBUNTU_PO_FILES += $$files(po/*.po)

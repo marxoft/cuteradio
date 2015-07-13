@@ -17,35 +17,22 @@
 import QtQuick 1.0
 import org.hildon.components 1.0
 
-ListItem {
+MenuItem {
     id: root
     
-    Label {
-        anchors {
-            left: parent.left
-            leftMargin: platformStyle.paddingMedium
-            right: image.left
-            rightMargin: platformStyle.paddingMedium
-            top: parent.top
-            bottom: parent.bottom
-        }
-        verticalAlignment: Text.AlignVCenter
-        elide: Text.ElideRight
-        font.bold: true
-        text: name
-    }
+    enabled: player.currentStation.id != ""
     
-    Image {
-        id: image
-        
-        width: 48
-        height: 48
-        anchors {
-            right: parent.right
-            rightMargin: platformStyle.paddingMedium
-            verticalCenter: parent.verticalCenter
+    ValueButton {
+        iconName: "general_clock"
+        text: qsTr("Sleep timer")
+        valueText: sleepTimer.running ? Utils.durationFromMSecs(sleepTimer.remaining) : qsTr("Off")
+        checkable: true
+        checked: sleepTimer.running
+        onClicked: {
+            sleepTimer.running = !sleepTimer.running;
+            informationBox.information(sleepTimer.running ? qsTr("Sleep timer set for")
+                                       + " " + Settings.sleepTimerDuration + " " + qsTr("minutes")
+                                       : qsTr("Sleep timer disabled"));
         }
-        source: "image://icon/general_forward"
-        smooth: true
     }
 }

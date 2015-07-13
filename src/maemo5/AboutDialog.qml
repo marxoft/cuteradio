@@ -1,49 +1,63 @@
 /*
- * Copyright (C) 2014 Stuart Howarth <showarth@marxoft.co.uk>
+ * Copyright (C) 2015 Stuart Howarth <showarth@marxoft.co.uk>
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms and conditions of the GNU Lesser General Public License,
- * version 3, as published by the Free Software Foundation.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
  *
- * This program is distributed in the hope it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
- * more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St - Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import QtQuick 1.0
 import org.hildon.components 1.0
 
 Dialog {
     id: root
     
-    windowTitle: qsTr("About")
-    height: window.inPortrait ? 240 : 200
-    content: Column {
-        anchors.fill: parent
+    title: qsTr("About")
+    height: screen.currentOrientation == Qt.WA_Maemo5PortraitOrientation ? 260 : 220
+    
+    Column {
+        id: column
+        
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+        }
+        spacing: platformStyle.paddingMedium
 
         Row {
-
+            width: parent.width
+            spacing: platformStyle.paddingMedium
+            
             Image {
                 width: 64
                 height: 64
-                source: "/usr/share/icons/hicolor/64x64/apps/cuteradio.png"
+                source: "image://icon/cuteradio"
             }
 
             Label {
+                width: parent.width
+                height: 64
+                verticalAlignment: Text.AlignVCenter
                 font.bold: true
-                font.pixelSize: platformStyle.fontSizeLarge
+                font.pointSize: platformStyle.fontSizeLarge
                 text: "cuteRadio " + VERSION_NUMBER
             }
         }
 
         Label {
-            wordWrap: true
+            width: parent.width
+            wrapMode: Text.WordWrap
             text: qsTr("A user-friendly internet radio player and client for the cuteRadio internet radio service.")
-                  + "<br><br>&copy; Stuart Howarth 2014"
+                  + "<br><br>&copy; Stuart Howarth 2015"
         }
     }
 }

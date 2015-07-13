@@ -17,4 +17,4 @@
  
 #include <QString>
 
-static const QString VERSION_NUMBER("0.3.3");
+static const QString VERSION_NUMBER("0.3.4");

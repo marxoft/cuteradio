@@ -1,20 +1,20 @@
 /*
- * Copyright (C) 2014 Stuart Howarth <showarth@marxoft.co.uk>
+ * Copyright (C) 2015 Stuart Howarth <showarth@marxoft.co.uk>
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms and conditions of the GNU Lesser General Public License,
- * version 3, as published by the Free Software Foundation.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
  *
- * This program is distributed in the hope it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
- * more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St - Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
+import QtQuick 1.0
 import org.hildon.components 1.0
 import org.marxoft.cuteradio 1.0
 
@@ -31,67 +31,97 @@ Dialog {
     property alias source: sourceField.text
     property alias result: request.result
     
-    height: window.inPortrait ? 680 : 360
-    windowTitle: qsTr("Add station")
-    content: Flickable {
+    height: 360
+    title: qsTr("Add station")
+    
+    Flickable {
         id: flicker
         
-        anchors.fill: parent
+        anchors {
+            left: parent.left
+            right: acceptButton.left
+            rightMargin: platformStyle.paddingMargin
+            top: parent.top
+            bottom: parent.bottom
+        }
+        horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+        contentHeight: column.height
         
         Column {
             id: column
             
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: parent.top
+            }
+            
             Label {
+                width: parent.width
                 text: qsTr("Title")
             }
             
             TextField {
                 id: titleField
                 
+                width: parent.width
                 validator: RegExpValidator {
                     regExp: /^.+/
                 }
             }
             
             Label {
+                width: parent.width
                 text: qsTr("Description")
             }
             
             TextField {
+                width: parent.width
                 id: descriptionField
             }
             
             Label {
+                width: parent.width
                 text: qsTr("Genre")
             }
             
             TextField {
                 id: genreField
+                
+                width: parent.width
             }
             
             Label {
+                width: parent.width
                 text: qsTr("Country")
             }
             
             TextField {
                 id: countryField
+                
+                width: parent.width
             }
             
             Label {
+                width: parent.width
                 text: qsTr("Language")
             }
             
             TextField {
                 id: languageField
+                
+                width: parent.width
             }
             
             Label {
+                width: parent.width
                 text: qsTr("Source")
             }
             
             TextField {
                 id: sourceField
                 
+                width: parent.width
                 validator: RegExpValidator {
                     regExp: /^.+/
                 }
@@ -99,8 +129,14 @@ Dialog {
         }
     }
     
-    buttons: Button {
-        focusPolicy: Qt.NoFocus
+    Button {
+        id: acceptButton
+        
+        anchors {
+            right: parent.right
+            bottom: parent.bottom
+        }
+        style: DialogButtonStyle {}
         text: qsTr("Done")
         enabled: (titleField.acceptableInput) && (sourceField.acceptableInput)
         onClicked: {
@@ -168,9 +204,42 @@ Dialog {
         }
     }
     
+    StateGroup {
+        states: State {
+            name: "Portrait"
+            when: screen.currentOrientation == Qt.WA_Maemo5PortraitOrientation
+        
+            PropertyChanges {
+                target: root
+                height: 680
+            }
+        
+            AnchorChanges {
+                target: flicker
+                anchors {
+                    right: parent.right
+                    bottom: button.top
+                }
+            }
+        
+            PropertyChanges {
+                target: flicker
+                anchors {
+                    rightMargin: 0
+                    bottomMargin: platformStyle.paddingMedium
+                }
+            }
+        
+            PropertyChanges {
+                target: acceptButton
+                width: parent.width
+            }
+        }
+    }
+    
     onRejected: request.cancel()
-    onVisibleChanged: {
-        if (visible) {
+    onStatusChanged: {
+        if (status == DialogStatus.Opening) {
             titleField.clear();
             descriptionField.clear();
             genreField.clear();
