@@ -1,9 +1,0 @@
-#!/bin/sh
-
-if [ -f /home/user/cuteRadio/cuteradio.db ]
-    then
-        echo "Removing old stations database"
-        rm /home/user/cuteRadio/cuteradio.db
-fi
-
-exit 0

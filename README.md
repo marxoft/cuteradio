@@ -1,11 +1,11 @@
 #cuteRadio
 
-cuteRadio is a user-friendly internet radio player and client for the cuteRadio REST API.
+cuteRadio is a user-friendly internet radio player and client for the cuteRadio Data API.
 
 Features include:
 
     * Search stations and browse by genre, country and language.
-    * Access recently played stations.
+    * Access your recently played stations.
     * Add stations to your favourites.
-    * Create new stations or copy existing stations to your stations and edit them.
+    * Create and edit stations.
     * Sleep timer.

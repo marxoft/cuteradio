@@ -1,0 +1,11 @@
+#!/bin/sh
+
+CONFIG_FILE="/home/user/.config/cuteRadio/cuteRadio.conf"
+
+if [ -f "$CONFIG_FILE" ]
+    then
+        echo "Removing old cuteRadio config file"
+        rm "$CONFIG_FILE"
+fi
+
+exit 0
