@@ -83,7 +83,7 @@ Window {
         
         MenuItem {
             text: qsTr("Edit details")
-            enabled: stationModel.get(view.currentIndex).creatorId == Settings.userId
+            enabled: (Settings.token) && (stationModel.get(view.currentIndex).creatorId == Settings.userId)
             onTriggered: dialogs.showEditStationDialog()
         }
         
