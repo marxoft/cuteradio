@@ -91,7 +91,7 @@ MyPage {
         color: UI.COLOR_INVERTED_SECONDARY_FOREGROUND
         font.bold: true
         font.pixelSize: 40
-        text: qsTr("No countries found")
+        text: qsTr("No genres found")
         visible: false
     }   
 }
