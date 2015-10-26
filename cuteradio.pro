@@ -34,7 +34,6 @@ maemo5 {
     QT += declarative opengl
     
     INCLUDEPATH += ../libcuteradio/src src/harmattan
-        
     
     HEADERS += ../libcuteradio/src/*.h src/harmattan/*.h 
     SOURCES += ../libcuteradio/src/*.cpp src/harmattan/*.cpp
@@ -57,6 +56,45 @@ maemo5 {
     splash.path = /opt/cuteradio/splash
 
     INSTALLS += qml images desktop icon splash
+    
+} else:symbian {
+    TARGET = cuteradio_0xe71cbb8d
+    TARGET.UID3 = 0xE71CBB8D
+    TARGET.CAPABILITY += NetworkServices ReadUserData
+    TARGET.EPOCHEAPSIZE = 0x20000 0x8000000
+    TARGET.EPOCSTACKSIZE = 0x14000
+    
+    VERSION = 0.4.0
+    ICON = desktop/symbian/cuteradio.svg
+    
+    QT += declarative
+    CONFIG += qtcomponents
+    
+    MMP_RULES += "DEBUGGABLE_UDEBONLY"
+    
+    LIBS += -L\\epoc32\\release\\armv5\\lib -lremconcoreapi
+    LIBS += -L\\epoc32\\release\\armv5\\lib -lremconinterfacebase
+    
+    INCLUDEPATH += MW_LAYER_SYSTEMINCLUDE ../libcuteradio/src src/symbian
+    
+    HEADERS += ../libcuteradio/src/*.h src/symbian/*.h 
+    SOURCES += ../libcuteradio/src/*.cpp src/symbian/*.cpp
+
+    vendorinfo += "%{\"Stuart Howarth\"}" ":\"Stuart Howarth\""
+    qtcomponentsdep = "; Default dependency to Qt Quick Components for Symbian library" \
+        "(0x200346DE), 1, 1, 0, {\"Qt Quick components for Symbian\"}"
+
+    cuteradio_deployment.pkg_prerules += vendorinfo qtcomponentsdep
+    
+    qml.sources = $$files(src/symbian/qml/*.qml)
+    qml.path = !:/Private/e71cbb8d/qml
+
+    images.sources = $$files(src/symbian/qml/images/*.*)
+    images.path = !:/Private/e71cbb8d/qml/images
+
+    DEPLOYMENT.display_name = cuteRadio
+
+    DEPLOYMENT += cuteradio_deployment qml images
 }
 
 INSTALLS += target
