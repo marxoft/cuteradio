@@ -148,7 +148,7 @@ MyPage {
     }
 
     Component {
-        id: addStationDialog
+        id: editStationDialog
 
         AddStationDialog {
             onAccepted: stationModel.set(stationModel.find("id", result.id), result)
