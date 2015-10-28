@@ -34,11 +34,13 @@ Rectangle {
     signal done
 
     function open() {
-        root.status = DialogStatus.Open
+        root.status = DialogStatus.Opening;
+        root.status = DialogStatus.Open;
         root.opened();
     }
 
     function close() {
+        root.status = DialogStatus.Closing;
         root.status = DialogStatus.Closed;
         root.closed();
     }
