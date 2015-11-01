@@ -163,9 +163,11 @@ MySheet {
                 column.enabled = false;
                 return;
             }
-            case CuteRadio.ResourcesRequest.Ready:
+            case CuteRadio.ResourcesRequest.Ready: {
+                infoBanner.showMessage(root.stationId ? qsTr("Station updated") : qsTr("Station added"));
                 root.accept();
                 break;
+            }
             case CuteRadio.ResourcesRequest.Error:
                 infoBanner.showMessage(errorString);
                 break;
