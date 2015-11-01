@@ -45,6 +45,24 @@ MyPage {
                 margins: platformStyle.paddingLarge
             }
             spacing: platformStyle.paddingLarge * 2
+
+            Label {
+                width: parent.width
+                wrapMode: Text.WordWrap
+                textFormat: Text.RichText
+                text: "<html>
+<b>0.4.1</b>
+
+<ul>
+
+<li>
+Bug fixes.
+</li>
+
+</ul>
+
+</html>"
+            }
             
             Label {
                 width: parent.width
