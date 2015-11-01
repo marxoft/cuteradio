@@ -45,12 +45,11 @@ MediakeyCaptureItem::MediakeyCaptureItem(QObject *parent): QObject(parent)
     d_ptr->m_timer = new QTimer(this);
     d_ptr->m_timer->setInterval(150);
     d_ptr->m_timer->setSingleShot(false);
-    d_ptr->m_volume = 0.8;
-    this->connect(d_ptr->m_timer, SIGNAL(timeout()), this, SLOT(onTimerTriggered()));
+    connect(d_ptr->m_timer, SIGNAL(timeout()), this, SLOT(onTimerTriggered()));
 }
 
 // Constructor
-MediakeyCaptureItemPrivate::MediakeyCaptureItemPrivate(MediakeyCaptureItem *parent): d_ptr(parent), m_volume(1.0)
+MediakeyCaptureItemPrivate::MediakeyCaptureItemPrivate(MediakeyCaptureItem *parent): d_ptr(parent), m_volume(0.5)
 {
     QT_TRAP_THROWING(iInterfaceSelector = CRemConInterfaceSelector::NewL());
     QT_TRAP_THROWING(iCoreTarget = CRemConCoreApiTarget::NewL(*iInterfaceSelector, *this));
@@ -106,28 +105,28 @@ void MediakeyCaptureItem::setVolume(qreal volume) {
 }
 
 void MediakeyCaptureItem::increaseVolume() {
-    if (this->volume() < 0.95) {
-        this->setVolume(this->volume() + 0.05);
+    if (volume() < 0.95) {
+        setVolume(volume() + 0.05);
     }
     else {
-        this->setVolume(1.0);
+        setVolume(1.0);
     }
 }
 
 void MediakeyCaptureItem::decreaseVolume() {
-    if (this->volume() > 0.05) {
-        this->setVolume(this->volume() - 0.05);
+    if (volume() > 0.05) {
+        setVolume(volume() - 0.05);
     }
     else {
-        this->setVolume(0.0);
+        setVolume(0.0);
     }
 }
 
 void MediakeyCaptureItem::onTimerTriggered() {
     if (d_ptr->m_volumeUpPressed) {
-        this->increaseVolume();
+        increaseVolume();
     }
     else if (d_ptr->m_volumeDownPressed) {
-        this->decreaseVolume();
+        decreaseVolume();
     }
 }
