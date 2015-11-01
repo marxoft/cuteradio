@@ -130,6 +130,7 @@ Window {
             }
             
             var station = stationModel.get(view.currentIndex);
+            editStationDialog.stationId = station.id;
             editStationDialog.title = station.title;
             editStationDialog.description = station.description;
             editStationDialog.genre = station.genre;
