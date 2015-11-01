@@ -17,7 +17,7 @@
 #include <QColor>
 #include <QString>
 
-static const QString VERSION_NUMBER("0.4.0");
+static const QString VERSION_NUMBER("0.4.1");
 
 static const QColor ACTIVE_COLOR("#0881cb");
 static const QString ACTIVE_COLOR_STRING("color7");

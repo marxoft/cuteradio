@@ -64,7 +64,7 @@ maemo5 {
     TARGET.EPOCHEAPSIZE = 0x20000 0x8000000
     TARGET.EPOCSTACKSIZE = 0x14000
     
-    VERSION = 0.4.0
+    VERSION = 0.4.1
     ICON = desktop/symbian/cuteradio.svg
     
     QT += declarative
