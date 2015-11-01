@@ -121,6 +121,7 @@ MyPage {
                     loader.item.open();
                     
                     var station = stationModel.get(view.selectedIndex);
+                    loader.item.stationId = station.id;
                     loader.item.title = station.title;
                     loader.item.description = station.description;
                     loader.item.genre = station.genre;
