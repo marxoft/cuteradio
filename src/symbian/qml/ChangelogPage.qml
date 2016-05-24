@@ -51,6 +51,24 @@ MyPage {
                 wrapMode: Text.WordWrap
                 textFormat: Text.RichText
                 text: "<html>
+<b>0.4.2</b>
+
+<ul>
+
+<li>
+Use status bar for page titles to gain extra space.
+</li>
+
+</ul>
+
+</html>"
+            }
+
+            Label {
+                width: parent.width
+                wrapMode: Text.WordWrap
+                textFormat: Text.RichText
+                text: "<html>
 <b>0.4.1</b>
 
 <ul>

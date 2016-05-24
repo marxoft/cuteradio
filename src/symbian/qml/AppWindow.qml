@@ -28,7 +28,7 @@ Window {
 
     objectName: "pageStackWindow"
 
-    StatusBar {
+    MyStatusBar {
         id: statusBar
 
         anchors {
@@ -36,6 +36,7 @@ Window {
             topMargin: window.showStatusBar ? 0 : -height
         }
         width: parent.width
+        title: stack.currentPage ? stack.currentPage.title : ""
     }
 
     Item {
@@ -68,22 +69,6 @@ Window {
             }
             clip: true
             toolBar: toolBar
-        }
-
-        Image {
-            z: 1001
-            visible: window.cornersVisible
-            anchors.top : parent.top
-            anchors.left: parent.left
-            source: "images/corner-left.png"
-        }
-
-        Image {
-            z: 1001
-            visible: window.cornersVisible
-            anchors.top: parent.top
-            anchors.right: parent.right
-            source: "images/corner-right.png"
         }
     }
 

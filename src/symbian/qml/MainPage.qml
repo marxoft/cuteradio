@@ -22,6 +22,7 @@ import CuteRadioApp 1.0
 MyPage {
     id: root
 
+    title: "cuteRadio"
     tools: ToolBarLayout {
 
         BackToolButton {
@@ -110,6 +111,22 @@ MyPage {
                 appWindow.pageStack.currentPage.reload();
             }
         }
+    }
+
+    Image {
+        z: Number.MAX_VALUE
+        visible: appWindow.cornersVisible
+        anchors.top : parent.top
+        anchors.left: parent.left
+        source: "images/corner-left.png"
+    }
+
+    Image {
+        z: Number.MAX_VALUE
+        visible: appWindow.cornersVisible
+        anchors.top: parent.top
+        anchors.right: parent.right
+        source: "images/corner-right.png"
     }
 
     MyListView {
