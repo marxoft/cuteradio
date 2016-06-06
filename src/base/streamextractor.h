@@ -18,11 +18,6 @@
 #define STREAMEXTRACTOR_H
 
 #include <QNetworkReply>
-#if QT_VERSION >= 0x050000
-#include <qqml.h>
-#else
-#include <qdeclarative.h>
-#endif
 
 class QNetworkAccessManager;
 class QUrl;
@@ -58,7 +53,7 @@ public:
     QString errorString() const;
     
 public Q_SLOTS:
-    void getStreamUrl(const QString &url);
+    void getStreamUrl(const QUrl &url);
     void cancel();
 
 private:    
@@ -72,7 +67,7 @@ private Q_SLOTS:
     void parseResponse();
 
 Q_SIGNALS:
-    void statusChanged(Status status);
+    void statusChanged(StreamExtractor::Status status);
 
 private:
     QNetworkAccessManager *m_nam;
@@ -84,7 +79,5 @@ private:
     
     QString m_result;
 };
-
-QML_DECLARE_TYPE(StreamExtractor)
 
 #endif

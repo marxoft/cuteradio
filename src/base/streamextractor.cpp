@@ -137,7 +137,7 @@ void StreamExtractor::cancel() {
     }
 }
 
-void StreamExtractor::getStreamUrl(const QString &url) {
+void StreamExtractor::getStreamUrl(const QUrl &url) {
 #ifdef CUTERADIO_DEBUG
     qDebug() << "StreamExtractor::getStreamUrl:" << url;
 #endif
@@ -196,12 +196,12 @@ void StreamExtractor::parseResponse() {
         }
     }
     else {
-        QString response(m_reply->readAll());
+        const QString response = QString::fromUtf8(m_reply->readAll());
 #ifdef CUTERADIO_DEBUG
         qDebug() << "response:" << response;
 #endif
-        QString format = m_reply->url().toString().section('.', -1).toLower();
-        QString url = getUrlFromPlaylistFile(response, format);
+        const QString format = m_reply->url().toString().section('.', -1).toLower();
+        const QString url = getUrlFromPlaylistFile(response, format);
 
         if (url.isEmpty()) {
             setStatus(Error);

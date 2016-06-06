@@ -95,6 +95,47 @@ maemo5 {
     DEPLOYMENT.display_name = cuteRadio
 
     DEPLOYMENT += cuteradio_deployment qml images
+
+} else:unix {
+    greaterThan(QT_MAJOR_VERSION, 4) {
+        QT += widgets multimedia
+    }
+    else {
+        CONFIG += mobility
+    }
+
+    LIBS += -L/usr/lib -lcuteradio
+    CONFIG += link_prl
+    PKGCONFIG += libcuteradio
+    
+    INCLUDEPATH += src/desktop
+
+    HEADERS += src/desktop/*.h
+    SOURCES += src/desktop/*.cpp
+
+    desktop.files = desktop/desktop/cuteradio.desktop
+    desktop.path = /usr/share/applications
+    
+    icon64.files = desktop/desktop/64x64/cuteradio.png
+    icon64.path = /usr/share/icons/hicolor/64x64/apps
+    
+    icon48.files = desktop/desktop/48x48/cuteradio.png
+    icon48.path = /usr/share/icons/hicolor/48x48/apps
+    
+    icon22.files = desktop/desktop/22x22/cuteradio.png
+    icon22.path = /usr/share/icons/hicolor/22x22/apps
+    
+    icon16.files = desktop/desktop/16x16/cuteradio.png
+    icon16.path = /usr/share/icons/hicolor/16x16/apps
+
+    target.path = /usr/bin
+
+    INSTALLS += \
+        desktop \
+        icon64 \
+        icon48 \
+        icon22 \
+        icon16
 }
 
 INSTALLS += target
