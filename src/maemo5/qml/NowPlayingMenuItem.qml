@@ -20,13 +20,12 @@ import org.hildon.components 1.0
 MenuItem {
     id: root
     
-    enabled: player.currentStation.id != ""
+    enabled: nowPlayingAction.enabled
     
-    ValueButton {
-        iconSource: player.playing ? "/etc/hildon/theme/mediaplayer/Play.png" : "/etc/hildon/theme/mediaplayer/Stop.png"
-        text: player.currentStation.title
-        valueText: (!player.metaData.title) || (player.metaData.title == player.source.substring(player.source.lastIndexOf("/") + 1))
-                    ? qsTr("(unknown song)") : player.metaData.title
-        onClicked: windowStack.push(Qt.resolvedUrl("NowPlayingWindow.qml"))
+    ValueButton {        
+        action: nowPlayingAction
+        valueText: (!player.metaData.title)
+        || (player.metaData.title == player.source.substring(player.source.lastIndexOf("/") + 1))
+        ? qsTr("(unknown song)") : player.metaData.title
     }
 }

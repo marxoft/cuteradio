@@ -31,35 +31,125 @@ ApplicationWindow {
         SleepTimerMenuItem {}
         
         MenuItem {
-            text: qsTr("Play URL")
-            onTriggered: dialogs.showUrlDialog()
+            action: playUrlAction
         }
         
         MenuItem {
-            text: qsTr("Search")
-            onTriggered: dialogs.showSearchDialog()
+            action: searchAction
         }
         
         MenuItem {
-            text: qsTr("Add station")
-            enabled: Settings.token != ""
-            onTriggered: dialogs.showAddStationDialog()
+            action: addStationAction
         }
         
         MenuItem {
             text: qsTr("Account")
             enabled: Settings.token == ""
-            onTriggered: dialogs.showAccountDialog()
+            onTriggered: popupManager.open(Qt.resolvedUrl("AccountDialog.qml"), window)
         }
         
         MenuItem {
-            text: qsTr("Settings")
-            onTriggered: dialogs.showSettingsDialog()
+            action: settingsAction
         }
         
         MenuItem {
             text: qsTr("About")
-            onTriggered: dialogs.showAboutDialog()
+            onTriggered: popupManager.open(Qt.resolvedUrl("AboutDialog.qml"), window)
+        }
+    }
+    
+    Action {
+        id: playUrlAction
+        
+        text: qsTr("Play URL")
+        shortcut: Settings.playUrlShortcut
+        autoRepeat: false
+        onTriggered: popupManager.open(Qt.resolvedUrl("PlayUrlDialog.qml"), window)
+    }
+    
+    Action {
+        id: searchAction
+        
+        text: qsTr("Search")
+        shortcut: Settings.searchShortcut
+        autoRepeat: false
+        onTriggered: popupManager.open(Qt.resolvedUrl("SearchDialog.qml"), window)
+    }
+    
+    Action {
+        id: addStationAction
+        
+        text: qsTr("Add station")
+        shortcut: Settings.addStationShortcut
+        autoRepeat: false
+        enabled: Settings.token != ""
+        onTriggered: popupManager.open(Qt.resolvedUrl("AddStationDialog.qml"), window)
+    }
+    
+    Action {
+        id: settingsAction
+        
+        text: qsTr("Settings")
+        shortcut: Settings.settingsShortcut
+        autoRepeat: false
+        onTriggered: popupManager.open(Qt.resolvedUrl("SettingsDialog.qml"), window)
+    }
+    
+    Action {
+        id: togglePlaybackAction
+        
+        shortcut: Settings.togglePlaybackShortcut
+        shortcutContext: Qt.ApplicationShortcut
+        autoRepeat: false
+        enabled: player.currentStation.id != ""
+        onTriggered: player.playing ? player.stop() : player.restart()
+    }
+    
+    Action {
+        id: playbackNextAction
+        
+        shortcut: Settings.playbackNextShortcut
+        shortcutContext: Qt.ApplicationShortcut
+        autoRepeat: false
+        onTriggered: playlist.next()
+    }
+        
+    Action {
+        id: playbackPreviousAction
+        
+        shortcut: Settings.playbackPreviousShortcut
+        shortcutContext: Qt.ApplicationShortcut
+        autoRepeat: false
+        onTriggered: playlist.previous()
+    }
+    
+    Action {
+        id: nowPlayingAction
+        
+        text: player.currentStation.title
+        iconSource: player.playing ? "/etc/hildon/theme/mediaplayer/Play.png" : "/etc/hildon/theme/mediaplayer/Stop.png"
+        shortcut: Settings.nowPlayingShortcut
+        shortcutContext: Qt.ApplicationShortcut
+        autoRepeat: false
+        enabled: (player.currentStation.id != "") && (windowStack.currentWindow.objectName != "NowPlayingWindow")
+        onTriggered: windowStack.push(Qt.resolvedUrl("NowPlayingWindow.qml"))
+    }
+    
+    Action {
+        id: sleepTimerAction
+        
+        text: qsTr("Sleep timer") + (sleepTimer.running ? " (" + Utils.formatMSecs(sleepTimer.remaining) + ")" : "")
+        shortcut: Settings.sleepTimerShortcut
+        shortcutContext: Qt.ApplicationShortcut
+        autoRepeat: false
+        checkable: true
+        checked: sleepTimer.running
+        enabled: player.currentStation.id != ""
+        onTriggered: {
+            sleepTimer.running = !sleepTimer.running;
+            informationBox.information(sleepTimer.running ? qsTr("Sleep timer set for")
+            + " " + Settings.sleepTimerDuration + " " + qsTr("minutes")
+            : qsTr("Sleep timer disabled"));
         }
     }
     
@@ -73,31 +163,32 @@ ApplicationWindow {
             onClicked: {
                 switch (index) {
                 case 0:
-                    windowStack.push(Qt.resolvedUrl("StationsWindow.qml"), {title: name});
+                    windowStack.push(Qt.resolvedUrl("StationsWindow.qml"), {title: name}).reload();
                     break;
                 case 1:
-                    windowStack.push(Qt.resolvedUrl("GenresWindow.qml"));
+                    windowStack.push(Qt.resolvedUrl("GenresWindow.qml")).reload();
                     break;
                 case 2:
-                    windowStack.push(Qt.resolvedUrl("CountriesWindow.qml"));
+                    windowStack.push(Qt.resolvedUrl("CountriesWindow.qml")).reload();
                     break;
                 case 3:
-                    windowStack.push(Qt.resolvedUrl("LanguagesWindow.qml"));
+                    windowStack.push(Qt.resolvedUrl("LanguagesWindow.qml")).reload();
                     break;
                 case 4:
-                    windowStack.push(Qt.resolvedUrl("StationsWindow.qml"), {title: name, resource: "playedstations"});
+                    windowStack.push(Qt.resolvedUrl("StationsWindow.qml"),
+                    {title: name, resource: "playedstations"}).reload();
                     break;
                 case 5:
-                    windowStack.push(Qt.resolvedUrl("StationsWindow.qml"), {title: name, resource: "favourites"});
+                    windowStack.push(Qt.resolvedUrl("StationsWindow.qml"),
+                    {title: name, resource: "favourites"}).reload();
                     break;
                 case 6:
-                    windowStack.push(Qt.resolvedUrl("StationsWindow.qml"), {title: name, filters: {mine: true}});
+                    windowStack.push(Qt.resolvedUrl("StationsWindow.qml"),
+                    {title: name, filters: {mine: true}}).reload();
                     break;
                 default:
                     break;
-                }
-                
-                windowStack.currentWindow.reload();
+                }                
             }
         }
     }
@@ -126,106 +217,11 @@ ApplicationWindow {
             wrapMode: Text.WordWrap
         }
     }
-    
-    QtObject {
-        id: dialogs
         
-        property SearchDialog searchDialog
-        property PlayUrlDialog urlDialog
-        property AddStationDialog addStationDialog
-        property AccountDialog accountDialog
-        property SettingsDialog settingsDialog
-        property AboutDialog aboutDialog
-        
-        function showSearchDialog() {
-            if (!searchDialog) {
-                searchDialog = searchDialogComponent.createObject(window);
-            }
-            
-            searchDialog.open();
-        }
-        
-        function showUrlDialog() {
-            if (!urlDialog) {
-                urlDialog = urlDialogComponent.createObject(window);
-            }
-            
-            urlDialog.open();
-        }
-        
-        function showAddStationDialog() {
-            if (!addStationDialog) {
-                addStationDialog = addStationDialogComponent.createObject(window);
-            }
-            
-            addStationDialog.open();
-        }
-        
-        function showAccountDialog() {
-            if (!accountDialog) {
-                accountDialog = accountDialogComponent.createObject(window);
-            }
-            
-            accountDialog.open();
-        }
-        
-        function showSettingsDialog() {
-            if (!settingsDialog) {
-                settingsDialog = settingsDialogComponent.createObject(window);
-            }
-            
-            settingsDialog.open();
-        }
-        
-        function showAboutDialog() {
-            if (!aboutDialog) {
-                aboutDialog = aboutDialogComponent.createObject(window);
-            }
-            
-            aboutDialog.open();
-        }        
-    }
-    
-    Component {
-        id: searchDialogComponent
-        
-        SearchDialog {}
-    }
-    
-    Component {
-        id: urlDialogComponent
-        
-        PlayUrlDialog {}
-    }
-    
-    Component {
-        id: addStationDialogComponent
-        
-        AddStationDialog {}
-    }
-    
-    Component {
-        id: accountDialogComponent
-        
-        AccountDialog {}
-    }
-    
-    Component {
-        id: settingsDialogComponent
-        
-        SettingsDialog {}
-    }
-    
-    Component {
-        id: aboutDialogComponent
-        
-        AboutDialog {}
-    }
-    
     Audio {
         id: player
         
-        property variant currentStation: {
+        property variant currentStation: ({
             "id": "",
             "title": qsTr("(unknown station)"),
             "description": "",
@@ -233,7 +229,7 @@ ApplicationWindow {
             "country": qsTr("(unknown country)"),
             "language": qsTr("(unknown language)"),
             "source": ""
-        }
+        })
         
         function playStation(station) {
             currentStation = station;

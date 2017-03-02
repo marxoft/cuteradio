@@ -82,15 +82,7 @@ Dialog {
         }
     }
     
-    onAccepted: {
-        windowStack.push(Qt.resolvedUrl("StationsWindow.qml"),
-                        {title: qsTr("Search") + " ('" + searchField.text + "')", filters: {search: searchField.text}});
-        windowStack.currentWindow.reload();
-    }
-    onStatusChanged: {
-        if (status == DialogStatus.Opening) {
-            searchField.clear();
-            searchField.forceActiveFocus();
-        }
-    }
+    onAccepted: windowStack.push(Qt.resolvedUrl("StationsWindow.qml"),
+    {title: qsTr("Search") + " ('" + searchField.text + "')", filters: {search: searchField.text}}).reload();
+    Component.onCompleted: searchField.forceActiveFocus()
 }

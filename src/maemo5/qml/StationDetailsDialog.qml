@@ -20,7 +20,7 @@ import org.hildon.components 1.0
 Dialog {
     id: root
     
-    property variant station: {
+    property variant station: ({
         "id": "",
         "title": qsTr("Unknown"),
         "description": "",
@@ -30,9 +30,9 @@ Dialog {
         "source": "",
         "favourite": false,
         "lastPlayed": ""
-    }
+    })
     
-    height: column.height + platformStyle.paddingMedium
+    height: Math.min(360, column.height + platformStyle.paddingMedium)
     title: qsTr("Station details")
     
     Flickable {
@@ -45,11 +45,7 @@ Dialog {
         Column {
             id: column
             
-            anchors {
-                left: parent.left
-                right: parent.right
-                top: parent.top
-            }
+            width: parent.width
             spacing: platformStyle.paddingMedium
             
             Label {
@@ -60,7 +56,7 @@ Dialog {
             
             Label {
                 width: parent.width
-                wrapMode: Text.WordWrap
+                wrapMode: Text.Wrap
                 text: station.title
             }
             
@@ -72,7 +68,7 @@ Dialog {
             
             Label {
                 width: parent.width
-                wrapMode: Text.WordWrap
+                wrapMode: Text.Wrap
                 text: station.description ? station.description : qsTr("No description")
             }
             
@@ -84,7 +80,7 @@ Dialog {
             
             Label {
                 width: parent.width
-                wrapMode: Text.WordWrap
+                wrapMode: Text.Wrap
                 text: station.genre
             }
             
@@ -96,7 +92,7 @@ Dialog {
             
             Label {
                 width: parent.width
-                wrapMode: Text.WordWrap
+                wrapMode: Text.Wrap
                 text: station.country
             }
             
@@ -108,7 +104,7 @@ Dialog {
             
             Label {
                 width: parent.width
-                wrapMode: Text.WordWrap
+                wrapMode: Text.Wrap
                 text: station.language
             }
             
@@ -120,7 +116,7 @@ Dialog {
             
             Label {
                 width: parent.width
-                wrapMode: Text.WordWrap
+                wrapMode: Text.Wrap
                 text: station.source
             }
             
@@ -132,7 +128,7 @@ Dialog {
             
             Label {
                 width: parent.width
-                wrapMode: Text.WordWrap
+                wrapMode: Text.Wrap
                 text: station.lastPlayed ? station.lastPlayed : qsTr("Never")
             }
         }

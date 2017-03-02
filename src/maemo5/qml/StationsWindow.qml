@@ -34,9 +34,54 @@ Window {
         SleepTimerMenuItem {}
         
         MenuItem {
-            text: qsTr("Reload")
-            onTriggered: stationModel.reload()
+            action: reloadAction
         }
+    }
+    
+    Action {
+        id: reloadAction
+        
+        text: qsTr("Reload")
+        shortcut: Settings.reloadShortcut
+        autoRepeat: false
+        onTriggered: stationModel.reload()
+    }
+    
+    Action {
+        id: detailsAction
+        
+        text: qsTr("Show details")
+        shortcut: Settings.stationDetailsShortcut
+        autoRepeat: false
+        enabled: view.currentIndex >= 0
+        onTriggered: popupManager.open(detailsDialog, root)
+    }
+    
+    Action {
+        id: editAction
+        
+        text: qsTr("Edit details")
+        shortcut: Settings.editStationShortcut
+        autoRepeat: false
+        enabled: (Settings.token) && (view.currentIndex >= 0)
+        && (stationModel.get(view.currentIndex).creatorId == Settings.userId)
+        onTriggered: {
+            var station = stationModel.get(view.currentIndex);
+            popupManager.open(editDialog, root, {stationId: station.id, title: station.title,
+                description: station.description, genre: station.genre, country: station.country,
+                language: station.language, source: station.source});
+        }
+    }
+    
+    Action {
+        id: favouriteAction
+        
+        shortcut: Settings.stationFavouriteShortcut
+        autoRepeat: false
+        enabled: (Settings.token) && (view.currentIndex >= 0)
+        onTriggered: stationModel.get(view.currentIndex).favourite
+        ? request.deleteFromFavourites(stationModel.get(view.currentIndex).id)
+        : request.addToFavourites(stationModel.get(view.currentIndex).id)
     }
     
     ListView {
@@ -69,34 +114,10 @@ Window {
         }
         delegate: StationDelegate {
             onClicked: player.playStation(stationModel.get(index));
-            onPressAndHold: contextMenu.popup()
+            onPressAndHold: popupManager.open(contextMenu, root)
         }
     }
-    
-    Menu {
-        id: contextMenu
         
-        MenuItem {
-            text: qsTr("Show details")
-            onTriggered: dialogs.showDetailsDialog()
-        }
-        
-        MenuItem {
-            text: qsTr("Edit details")
-            enabled: (Settings.token) && (stationModel.get(view.currentIndex).creatorId == Settings.userId)
-            onTriggered: dialogs.showEditStationDialog()
-        }
-        
-        MenuItem {
-            text: stationModel.get(view.currentIndex).favourite ? qsTr("Delete from favourites")
-                                                                : qsTr("Add to favourites")
-            enabled: Settings.token != ""
-            onTriggered: stationModel.get(view.currentIndex).favourite
-                         ? request.deleteFromFavourites(stationModel.get(view.currentIndex).id)
-                         : request.addToFavourites(stationModel.get(view.currentIndex).id)
-        }
-    }
-    
     Label {
         id: noResultsLabel
         
@@ -109,46 +130,36 @@ Window {
         visible: false
     }
     
-    QtObject {
-        id: dialogs
+    Component {
+        id: contextMenu
         
-        property StationDetailsDialog detailsDialog
-        property AddStationDialog editStationDialog
-        
-        function showDetailsDialog() {
-            if (!detailsDialog) {
-                detailsDialog = detailsDialogComponent.createObject(root);
+        Menu {        
+            MenuItem {
+                action: detailsAction
             }
             
-            detailsDialog.station = stationModel.get(view.currentIndex);
-            detailsDialog.open();
-        }
-        
-        function showEditStationDialog() {
-            if (!editStationDialog) {
-                editStationDialog = editStationDialogComponent.createObject(root);
+            MenuItem {
+                action: editAction
             }
             
-            var station = stationModel.get(view.currentIndex);
-            editStationDialog.stationId = station.id;
-            editStationDialog.title = station.title;
-            editStationDialog.description = station.description;
-            editStationDialog.genre = station.genre;
-            editStationDialog.country = station.country;
-            editStationDialog.language = station.language;
-            editStationDialog.source = station.source;
-            editStationDialog.open();
+            MenuItem {
+                action: favouriteAction
+                text: stationModel.get(view.currentIndex).favourite ? qsTr("Delete from favourites")
+                : qsTr("Add to favourites")
+            }
         }
     }
     
     Component {
-        id: detailsDialogComponent
+        id: detailsDialog
         
-        StationDetailsDialog {}
+        StationDetailsDialog {
+            station: stationModel.get(view.currentIndex)
+        }
     }
     
     Component {
-        id: editStationDialogComponent
+        id: editDialog
 
         AddStationDialog {
             onAccepted: stationModel.set(stationModel.find("id", result.id), result)

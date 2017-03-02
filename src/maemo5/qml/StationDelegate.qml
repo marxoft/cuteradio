@@ -20,28 +20,23 @@ import org.hildon.components 1.0
 ListItem {
     id: root
     
-    Image {
-        id: favouriteImage
+    Loader {
+        id: favouriteLoader
         
-        width: 48
-        height: 48
         anchors {
             right: parent.right
             rightMargin: platformStyle.paddingMedium
             verticalCenter: parent.verticalCenter
         }
-        
-        source: "image://icon/mediaplayer_internet_radio_favorite"
-        smooth: true
-        visible: favourite ? true : false
+        sourceComponent: favourite ? favouriteImage : undefined
     }
-    
+        
     Label {
         anchors {
             left: parent.left
             leftMargin: platformStyle.paddingMedium
-            right: favourite ? favouriteImage.left : parent.right
-            rightMargin: platformStyle.paddingMedium
+            right: favouriteLoader.left
+            rightMargin: favouriteLoader.item ? platformStyle.paddingMedium : 0
             top: parent.top
             topMargin: platformStyle.paddingMedium
         }
@@ -53,8 +48,8 @@ ListItem {
         anchors {
             left: parent.left
             leftMargin: platformStyle.paddingMedium
-            right: favourite ? favouriteImage.left : parent.right
-            rightMargin: platformStyle.paddingMedium
+            right: favouriteLoader.left
+            rightMargin: favouriteLoader.item ? platformStyle.paddingMedium : 0
             bottom: parent.bottom
             bottomMargin: platformStyle.paddingMedium
         }
@@ -63,5 +58,16 @@ ListItem {
         font.pointSize: platformStyle.fontSizeSmall
         color: platformStyle.secondaryTextColor
         text: genre + " | " + country + " | " + language
+    }
+    
+    Component {
+        id: favouriteImage
+        
+        Image {        
+            width: 48
+            height: 48
+            source: "image://icon/mediaplayer_internet_radio_favorite"
+            smooth: true
+        }
     }
 }

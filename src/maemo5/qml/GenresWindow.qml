@@ -32,9 +32,17 @@ Window {
         SleepTimerMenuItem {}
         
         MenuItem {
-            text: qsTr("Reload")
-            onTriggered: genreModel.reload()
+            action: reloadAction
         }
+    }
+    
+    Action {
+        id: reloadAction
+        
+        text: qsTr("Reload")
+        shortcut: Settings.reloadShortcut
+        autoRepeat: false
+        onTriggered: genreModel.reload()
     }
     
     ListView {
@@ -65,10 +73,8 @@ Window {
             }
         }
         delegate: NameCountDelegate {
-            onClicked: {
-                windowStack.push(Qt.resolvedUrl("StationsWindow.qml"), {title: name, filters: {genre: name}});
-                windowStack.currentWindow.reload();
-            }
+            onClicked: windowStack.push(Qt.resolvedUrl("StationsWindow.qml"),
+            {title: name, filters: {genre: name}}).reload();
         }
     }
     

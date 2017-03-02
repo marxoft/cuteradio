@@ -57,7 +57,7 @@ Dialog {
             width: parent.width
             wrapMode: Text.WordWrap
             text: qsTr("A user-friendly internet radio player and client for the cuteRadio internet radio service.")
-                  + "<br><br>&copy; Stuart Howarth 2015"
+                  + "<br><br>&copy; Stuart Howarth 2015-2017"
         }
     }
 }

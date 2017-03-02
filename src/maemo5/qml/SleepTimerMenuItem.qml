@@ -17,22 +17,6 @@
 import QtQuick 1.0
 import org.hildon.components 1.0
 
-MenuItem {
-    id: root
-    
-    enabled: player.currentStation.id != ""
-    
-    ValueButton {
-        iconName: "general_clock"
-        text: qsTr("Sleep timer")
-        valueText: sleepTimer.running ? Utils.formatMSecs(sleepTimer.remaining) : qsTr("Off")
-        checkable: true
-        checked: sleepTimer.running
-        onClicked: {
-            sleepTimer.running = !sleepTimer.running;
-            informationBox.information(sleepTimer.running ? qsTr("Sleep timer set for")
-                                       + " " + Settings.sleepTimerDuration + " " + qsTr("minutes")
-                                       : qsTr("Sleep timer disabled"));
-        }
-    }
+MenuItem {    
+    action: sleepTimerAction    
 }

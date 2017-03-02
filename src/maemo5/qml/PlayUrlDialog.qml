@@ -33,10 +33,7 @@ Dialog {
             bottom: parent.bottom
         }
         placeholderText: qsTr("URL")
-        validator: RegExpValidator {
-            regExp: /^.+/
-        }
-        onAccepted: root.accept()
+        onAccepted: if (text) root.accept();
     }
     
     Button {
@@ -48,7 +45,7 @@ Dialog {
         }
         style: DialogButtonStyle {}
         text: qsTr("Done")
-        enabled: urlField.acceptableInput
+        enabled: urlField.text != ""
         onClicked: root.accept()
     }
     
@@ -99,10 +96,5 @@ Dialog {
         }
     }
     
-    onStatusChanged: {
-        if (status == DialogStatus.Opening) {
-            urlField.clear();
-            urlField.forceActiveFocus();
-        }
-    }
+    Component.onCompleted: urlField.forceActiveFocus()
 }

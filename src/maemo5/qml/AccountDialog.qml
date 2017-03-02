@@ -141,11 +141,5 @@ Dialog {
     }
     
     onRejected: request.cancel()
-    onStatusChanged: {
-        if (status == DialogStatus.Opening) {
-            usernameField.clear();
-            passwordField.clear();
-            usernameField.forceActiveFocus();
-        }
-    }
+    Component.onCompleted: usernameField.forceActiveFocus()
 }

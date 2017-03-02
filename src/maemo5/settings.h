@@ -31,6 +31,28 @@ class Settings : public QSettings
     Q_PROPERTY(int sleepTimerDuration READ sleepTimerDuration WRITE setSleepTimerDuration
                NOTIFY sleepTimerDurationChanged)
     Q_PROPERTY(QString language READ language WRITE setLanguage NOTIFY languageChanged)
+    Q_PROPERTY(QString togglePlaybackShortcut READ togglePlaybackShortcut WRITE setTogglePlaybackShortcut
+               NOTIFY togglePlaybackShortcutChanged)
+    Q_PROPERTY(QString playbackNextShortcut READ playbackNextShortcut WRITE setPlaybackNextShortcut
+               NOTIFY playbackNextShortcutChanged)
+    Q_PROPERTY(QString playbackPreviousShortcut READ playbackPreviousShortcut WRITE setPlaybackPreviousShortcut
+               NOTIFY playbackPreviousShortcutChanged)
+    Q_PROPERTY(QString nowPlayingShortcut READ nowPlayingShortcut WRITE setNowPlayingShortcut
+               NOTIFY nowPlayingShortcutChanged)
+    Q_PROPERTY(QString sleepTimerShortcut READ sleepTimerShortcut WRITE setSleepTimerShortcut
+               NOTIFY sleepTimerShortcutChanged)
+    Q_PROPERTY(QString playUrlShortcut READ playUrlShortcut WRITE setPlayUrlShortcut NOTIFY playUrlShortcutChanged)
+    Q_PROPERTY(QString searchShortcut READ searchShortcut WRITE setSearchShortcut NOTIFY searchShortcutChanged)
+    Q_PROPERTY(QString settingsShortcut READ settingsShortcut WRITE setSettingsShortcut NOTIFY settingsShortcutChanged)
+    Q_PROPERTY(QString addStationShortcut READ addStationShortcut WRITE setAddStationShortcut
+               NOTIFY addStationShortcutChanged)
+    Q_PROPERTY(QString stationDetailsShortcut READ stationDetailsShortcut WRITE setStationDetailsShortcut
+               NOTIFY stationDetailsShortcutChanged)
+    Q_PROPERTY(QString editStationShortcut READ editStationShortcut WRITE setEditStationShortcut
+               NOTIFY editStationShortcutChanged)
+    Q_PROPERTY(QString stationFavouriteShortcut READ stationFavouriteShortcut WRITE setStationFavouriteShortcut
+               NOTIFY stationFavouriteShortcutChanged)
+    Q_PROPERTY(QString reloadShortcut READ reloadShortcut WRITE setReloadShortcut NOTIFY reloadShortcutChanged)
 
 public:
     ~Settings();
@@ -54,6 +76,33 @@ public:
 
     QString language() const;
     void setLanguage(const QString &l);
+    
+    QString togglePlaybackShortcut() const;
+    void setTogglePlaybackShortcut(const QString &keys);
+    QString playbackNextShortcut() const;
+    void setPlaybackNextShortcut(const QString &keys);
+    QString playbackPreviousShortcut() const;
+    void setPlaybackPreviousShortcut(const QString &keys);
+    QString nowPlayingShortcut() const;
+    void setNowPlayingShortcut(const QString &keys);
+    QString sleepTimerShortcut() const;
+    void setSleepTimerShortcut(const QString &keys);
+    QString playUrlShortcut() const;
+    void setPlayUrlShortcut(const QString &keys);
+    QString searchShortcut() const;
+    void setSearchShortcut(const QString &keys);
+    QString settingsShortcut() const;
+    void setSettingsShortcut(const QString &keys);
+    QString addStationShortcut() const;
+    void setAddStationShortcut(const QString &keys);
+    QString stationDetailsShortcut() const;
+    void setStationDetailsShortcut(const QString &keys);
+    QString editStationShortcut() const;
+    void setEditStationShortcut(const QString &keys);
+    QString stationFavouriteShortcut() const;
+    void setStationFavouriteShortcut(const QString &keys);
+    QString reloadShortcut() const;
+    void setReloadShortcut(const QString &keys);
 
 Q_SIGNALS:
     void userIdChanged();
@@ -63,6 +112,19 @@ Q_SIGNALS:
     void sleepTimerEnabledChanged();
     void sleepTimerDurationChanged();
     void languageChanged();
+    void togglePlaybackShortcutChanged();
+    void playbackNextShortcutChanged();
+    void playbackPreviousShortcutChanged();
+    void nowPlayingShortcutChanged();
+    void sleepTimerShortcutChanged();
+    void playUrlShortcutChanged();
+    void searchShortcutChanged();
+    void settingsShortcutChanged();
+    void addStationShortcutChanged();
+    void stationDetailsShortcutChanged();
+    void editStationShortcutChanged();
+    void stationFavouriteShortcutChanged();
+    void reloadShortcutChanged();
     
 private:
     Settings();

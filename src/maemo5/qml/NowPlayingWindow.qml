@@ -21,6 +21,7 @@ Window {
     id: root
     
     title: player.currentStation.title
+    objectName: "NowPlayingWindow"
     menuBar: MenuBar {
         SleepTimerMenuItem {}
     }
@@ -60,8 +61,9 @@ Window {
             width: parent.width
             elide: Text.ElideRight
             color: platformStyle.secondaryTextColor
-            text: (!player.metaData.title) || (player.metaData.title == player.source.substring(player.source.lastIndexOf("/") + 1))
-                   ? qsTr("(unknown artist) / (unknown song)") : player.metaData.title
+            text: (!player.metaData.title) ||
+            (player.metaData.title == player.source.substring(player.source.lastIndexOf("/") + 1))
+            ? qsTr("(unknown artist) / (unknown song)") : player.metaData.title
         }
         
         Row {
@@ -151,7 +153,7 @@ Window {
         }
         checkable: true
         iconName: "mediaplayer_volume"
-        Component.onCompleted: style = transparentToolButtonStyle
+        style: transparentToolButtonStyle
     }
     
     Loader {
@@ -173,21 +175,21 @@ Window {
             spacing: screen.currentOrientation == Qt.WA_Maemo5PortraitOrientation ? 0 : 42
             
             ToolButton {
+                action: playbackPreviousAction
                 iconSource: "/etc/hildon/theme/mediaplayer/Back" + (pressed ? "Pressed" : "") + ".png"
-                onClicked: playlist.previous()
-                Component.onCompleted: style = transparentToolButtonStyle
+                style: transparentToolButtonStyle
             }
             
             ToolButton {
+                action: togglePlaybackAction
                 iconSource: "/etc/hildon/theme/mediaplayer/" + (player.playing ? "Stop" : "Play") + ".png"
-                onClicked: player.playing ? player.stop() : player.restart()
-                Component.onCompleted: style = transparentToolButtonStyle
+                style: transparentToolButtonStyle
             }
             
             ToolButton {
+                action: playbackNextAction
                 iconSource: "/etc/hildon/theme/mediaplayer/Forward" + (pressed ? "Pressed" : "") + ".png"
-                onClicked: playlist.next()
-                Component.onCompleted: style = transparentToolButtonStyle
+                style: transparentToolButtonStyle
             }
         }
     }

@@ -21,7 +21,7 @@ import CuteRadioApp 1.0
 Dialog {
     id: root
     
-    height: column.height + platformStyle.paddingMedium
+    height: Math.min(360, column.height + platformStyle.paddingMedium)
     title: qsTr("Settings")
     
     Flickable {
@@ -49,6 +49,13 @@ Dialog {
             
             Label {
                 width: parent.width
+                horizontalAlignment: Text.AlignHCenter
+                color: platformStyle.secondaryTextColor
+                text: qsTr("General")
+            }
+            
+            Label {
+                width: parent.width
                 text: qsTr("Sleep timer duration (mins)")
             }
             
@@ -72,7 +79,164 @@ Dialog {
                 
                 width: parent.width
                 text: qsTr("Screen orientation")
-                pickSelector: orientationSelector
+                pickSelector: ListPickSelector {
+                    id: orientationSelector
+                    
+                    textRole: "name"
+                    model: ScreenOrientationModel {
+                        id: orientationModel
+                    }
+                }
+            }
+            
+            Label {
+                width: parent.width
+                horizontalAlignment: Text.AlignHCenter
+                color: platformStyle.secondaryTextColor
+                text: qsTr("Keyboard shortcuts")
+            }
+            
+            Label {
+                width: parent.width
+                text: qsTr("Toggle playback")
+            }
+            
+            TextField {
+                id: togglePlaybackShortcutField
+                
+                width: parent.width
+            }
+            
+            Label {
+                width: parent.width
+                text: qsTr("Playlist next")
+            }
+            
+            TextField {
+                id: playbackNextShortcutField
+                
+                width: parent.width
+            }
+            
+            Label {
+                width: parent.width
+                text: qsTr("Playlist previous")
+            }
+            
+            TextField {
+                id: playbackPreviousShortcutField
+                
+                width: parent.width
+            }
+            
+            Label {
+                width: parent.width
+                text: qsTr("Show now playing")
+            }
+            
+            TextField {
+                id: nowPlayingShortcutField
+                
+                width: parent.width
+            }
+            
+            Label {
+                width: parent.width
+                text: qsTr("Toggle sleep timer")
+            }
+            
+            TextField {
+                id: sleepTimerShortcutField
+                
+                width: parent.width
+            }
+            
+            Label {
+                width: parent.width
+                text: qsTr("Play URL")
+            }
+            
+            TextField {
+                id: playUrlShortcutField
+                
+                width: parent.width
+            }
+            
+            Label {
+                width: parent.width
+                text: qsTr("Search")
+            }
+            
+            TextField {
+                id: searchShortcutField
+                
+                width: parent.width
+            }
+            
+            Label {
+                width: parent.width
+                text: qsTr("Settings")
+            }
+            
+            TextField {
+                id: settingsShortcutField
+                
+                width: parent.width
+            }
+            
+            Label {
+                width: parent.width
+                text: qsTr("Add station")
+            }
+            
+            TextField {
+                id: addStationShortcutField
+                
+                width: parent.width
+            }
+            
+            Label {
+                width: parent.width
+                text: qsTr("View station details")
+            }
+            
+            TextField {
+                id: stationDetailsShortcutField
+                
+                width: parent.width
+            }
+            
+            Label {
+                width: parent.width
+                text: qsTr("Edit station details")
+            }
+            
+            TextField {
+                id: editStationShortcutField
+                
+                width: parent.width
+            }
+            
+            Label {
+                width: parent.width
+                text: qsTr("Toggle station favourite")
+            }
+            
+            TextField {
+                id: stationFavouriteShortcutField
+                
+                width: parent.width
+            }
+            
+            Label {
+                width: parent.width
+                text: qsTr("Reload content")
+            }
+            
+            TextField {
+                id: reloadShortcutField
+                
+                width: parent.width
             }
         }
     }
@@ -85,19 +249,10 @@ Dialog {
             bottom: parent.bottom
         }
         style: DialogButtonStyle {}
-        text: qsTr("Done")
+        text: qsTr("Save")
         onClicked: root.accept()
     }
-    
-    ListPickSelector {
-        id: orientationSelector
         
-        textRole: "name"
-        model: ScreenOrientationModel {
-            id: orientationModel
-        }
-    }
-    
     StateGroup {
         states: State {
             name: "Portrait"
@@ -136,13 +291,37 @@ Dialog {
         Settings.sendPlayedStationsData = playedCheckBox.checked;
         Settings.screenOrientation = orientationModel.data(orientationSelector.currentIndex, "value");
         screen.orientationLock = Settings.screenOrientation;
+        Settings.togglePlaybackShortcut = togglePlaybackShortcutField.text;
+        Settings.playbackNextShortcut = playbackNextShortcutField.text;
+        Settings.playbackPreviousShortcut = playbackPreviousShortcutField.text;
+        Settings.nowPlayingShortcut = nowPlayingShortcutField.text;
+        Settings.sleepTimerShortcut = sleepTimerShortcutField.text;
+        Settings.playUrlShortcut = playUrlShortcutField.text;
+        Settings.searchShortcut = searchShortcutField.text;
+        Settings.settingsShortcut = settingsShortcutField.text;
+        Settings.addStationShortcut = addStationShortcutField.text;
+        Settings.stationDetailsShortcut = stationDetailsShortcutField.text;
+        Settings.editStationShortcut = editStationShortcutField.text;
+        Settings.stationFavouriteShortcut = stationFavouriteShortcutField.text;
+        Settings.reloadShortcut = reloadShortcutField.text;
     }
     
-    onStatusChanged: {
-        if (status == DialogStatus.Opening) {
-            sleepField.value = Settings.sleepTimerDuration;
-            playedCheckBox.checked = Settings.sendPlayedStationsData;
-            orientationSelector.currentIndex = orientationModel.match("value", Settings.screenOrientation);
-        }
+    Component.onCompleted: {
+        sleepField.value = Settings.sleepTimerDuration;
+        playedCheckBox.checked = Settings.sendPlayedStationsData;
+        orientationSelector.currentIndex = orientationModel.match("value", Settings.screenOrientation);
+        togglePlaybackShortcutField.text = Settings.togglePlaybackShortcut;
+        playbackNextShortcutField.text = Settings.playbackNextShortcut;
+        playbackPreviousShortcutField.text = Settings.playbackPreviousShortcut;
+        nowPlayingShortcutField.text = Settings.nowPlayingShortcut;
+        sleepTimerShortcutField.text = Settings.sleepTimerShortcut;
+        playUrlShortcutField.text = Settings.playUrlShortcut;
+        searchShortcutField.text = Settings.searchShortcut;
+        settingsShortcutField.text = Settings.settingsShortcut;
+        addStationShortcutField.text = Settings.addStationShortcut;
+        stationDetailsShortcutField.text = Settings.stationDetailsShortcut;
+        editStationShortcutField.text = Settings.editStationShortcut;
+        stationFavouriteShortcutField.text = Settings.stationFavouriteShortcut;
+        reloadShortcutField.text = Settings.reloadShortcut;
     }
 }

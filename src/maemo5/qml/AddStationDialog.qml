@@ -30,7 +30,7 @@ Dialog {
     property alias source: sourceField.text
     property alias result: request.result
     
-    height: column.height + platformStyle.paddingMedium
+    height: Math.min(360, column.height + platformStyle.paddingMedium)
     title: stationId ? qsTr("Edit station") : qsTr("Add station")
     
     Flickable {
@@ -223,15 +223,5 @@ Dialog {
         }
     }
     
-    onStatusChanged: {
-        if (status == DialogStatus.Opening) {
-            titleField.clear();
-            descriptionField.clear();
-            genreField.clear();
-            countryField.clear();
-            languageField.clear();
-            sourceField.clear();
-            titleField.forceActiveFocus();
-        }
-    }
+    Component.onCompleted: titleField.forceActiveFocus()
 }

@@ -31,7 +31,6 @@ ListItem {
         }
         verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight
-        font.bold: true
         text: name
     }
     
